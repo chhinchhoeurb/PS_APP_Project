@@ -19,7 +19,8 @@
         <activity android:name=".Login" />
         <activity android:name=".Register" />
         <activity android:name=".CreatePost" />
-        <activity android:name=".UpdatePost"></activity>
+        <activity android:name=".UpdatePost" />
+        <activity android:name=".PosterProfile"></activity>
     </application>
 
 </manifest>

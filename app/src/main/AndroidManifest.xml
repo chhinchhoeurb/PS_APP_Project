@@ -18,7 +18,8 @@
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
-        <activity android:name=".CreatePost"></activity>
+        <activity android:name=".CreatePost" />
+        <activity android:name=".UpdatePost"></activity>
     </application>
 
 </manifest>

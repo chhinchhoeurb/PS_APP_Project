@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Toast.makeText(HomeActivity.this,"crush",Toast.LENGTH_LONG).show();
-                Intent loginIntent = new Intent(HomeActivity.this,CreatePost.class);
+                Intent loginIntent = new Intent(HomeActivity.this,UpdatePost.class);
                 startActivity(loginIntent);
             }
         });

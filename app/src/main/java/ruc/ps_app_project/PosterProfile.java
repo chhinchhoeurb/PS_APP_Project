@@ -8,7 +8,7 @@ import android.widget.ListView;
 public class PosterProfile extends AppCompatActivity {
     Button btnPost;
     ListView simpleList;
-    int flags[] = {R.drawable.kh, R.drawable.flaga};
+    int flags[] = {R.drawable.flaga, R.drawable.flaga};
     String countryList[] = {"Camboida","India"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {

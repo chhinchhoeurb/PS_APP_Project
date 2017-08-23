@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +50,8 @@ public class HomeActivity extends AppCompatActivity
         myTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent(HomeActivity.this,Register.class);
+                Toast.makeText(HomeActivity.this,"crush",Toast.LENGTH_LONG).show();
+                Intent loginIntent = new Intent(HomeActivity.this,CreatePost.class);
                 startActivity(loginIntent);
             }
         });

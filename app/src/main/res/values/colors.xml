@@ -12,4 +12,6 @@
     <color name="color_btnformat">#224c45</color>
     <color name="color_forgotpassword">#59b2a2</color>
     <color name="color_hint">#c5c8cf</color>
+    <color name="color_like_cmt_fav">#B7B7B7</color>
+    <color name="color_select_image">#379180</color>
 </resources>

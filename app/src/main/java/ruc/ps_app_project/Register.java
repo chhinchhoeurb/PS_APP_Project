@@ -11,17 +11,16 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-public class Login extends AppCompatActivity {
+public class Register extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         // Menu custom
         Toolbar mDetailToolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mDetailToolBar);
-
     }
 
 
@@ -29,7 +28,7 @@ public class Login extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mMenuInflater = getMenuInflater();
-        mMenuInflater.inflate(R.menu.menu_register, menu);
+        mMenuInflater.inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -43,11 +42,11 @@ public class Login extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.toRegiter:
+            case R.id.toLogin:
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
 
-                Intent updateIntent = new Intent(Login.this,Register.class);
+                Intent updateIntent = new Intent(Register.this,Login.class);
                 startActivity(updateIntent);
                 return true;
 
@@ -59,7 +58,6 @@ public class Login extends AppCompatActivity {
 
     // ---------------- End Overflow menu ---------------------
 
-
     // ---------Checkbox-----------
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -69,11 +67,11 @@ public class Login extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_seller:
                 if (checked)
-                    Toast.makeText(Login.this,"seller",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,"seller",Toast.LENGTH_LONG).show();
                 break;
             case R.id.radio_buyer:
                 if (checked)
-                    Toast.makeText(Login.this,"buyer",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,"buyer",Toast.LENGTH_LONG).show();
                 break;
         }
     }

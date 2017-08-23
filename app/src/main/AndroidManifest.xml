@@ -20,7 +20,8 @@
         <activity android:name=".Register" />
         <activity android:name=".CreatePost" />
         <activity android:name=".UpdatePost" />
-        <activity android:name=".PosterProfile"></activity>
+        <activity android:name=".PosterProfile" />
+        <activity android:name=".RegisterProfile"></activity>
     </application>
 
 </manifest>

@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:background="#FF4D94"
+                    android:background="@color/color_btnformat"
                     android:text="Let's go"
                     android:textColor="#fff" />
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#224c45</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#04988A</color>
     <color name="white">#fff</color>
@@ -12,4 +12,7 @@
     <color name="color_btnformat">#224c45</color>
     <color name="color_forgotpassword">#59b2a2</color>
     <color name="color_hint">#c5c8cf</color>
+    <color name="color_like_cmt_fav">#B7B7B7</color>
+    <color name="color_select_image">#379180</color>
+    <color name="color_products"> #B7B7B7</color>
 </resources>

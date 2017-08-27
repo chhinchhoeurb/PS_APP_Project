@@ -22,19 +22,14 @@
             android:id="@+id/nav_manage_post"
             android:icon="@drawable/post"
             android:title="Manage Post" />
+        <item
+            android:id="@+id/nav_change_password"
+            android:icon="@drawable/ic_vpn_key_black_24dp"
+            android:title="Change Password" />
+        <item
+            android:id="@+id/nav_Logout"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+
     </group>
-
-    <item android:title="Setting">
-        <menu>
-            <item
-                android:id="@+id/nav_change_password"
-                android:icon="@android:drawable/ic_secure"
-                android:title="Change Password" />
-            <item
-                android:id="@+id/nav_Logout"
-                android:icon="@drawable/logout"
-                android:title="Logout" />
-        </menu>
-    </item>
-
 </menu>

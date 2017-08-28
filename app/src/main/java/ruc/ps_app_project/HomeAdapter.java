@@ -1,7 +1,6 @@
 package ruc.ps_app_project;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +9,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HomeAdapter extends ArrayAdapter {
-    int logos[];
-    Context context;
-    String productListItem[];
-    public HomeAdapter(@NonNull Context applicationContext, String[] productListItem, int[] logo) {
-        super(applicationContext,R.layout.activity_gridview);
-        this.context = applicationContext;
-        this.logos = logo;
-        this.productListItem = productListItem;
 
+    Context context;
+    String countryList[];
+    int myflag[];
+
+    public HomeAdapter(Context applicationContext, String[] countryList, int[] flags) {
+        super(applicationContext,R.layout.homelist_item);
+        this.context = applicationContext;
+        this.countryList = countryList;
+        this.myflag = flags;
     }
 
     @Override
     public int getCount() {
-        return logos.length;
+        return countryList.length;
     }
 
     @Override
@@ -45,21 +45,24 @@ public class HomeAdapter extends ArrayAdapter {
         if (Listview == null){
 
             LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            Listview = mInflater.inflate(R.layout.activity_gridview, parent, false);
+            Listview = mInflater.inflate(R.layout.listview_item, parent, false);
 
-            holder = new HomeAdapter.ViewHolder();
+            holder = new ViewHolder();
 
-            holder.images = (ImageView) Listview.findViewById(R.id.iconGridview);
-            holder.products = (TextView) Listview.findViewById(R.id.productList);
+            holder.images = (ImageView) Listview.findViewById(R.id.displayImage);
+            holder.usernames = (TextView) Listview.findViewById(R.id.userItem);
+
 
             Listview.setTag(holder);
         }else {
 
-            holder = (HomeAdapter.ViewHolder) Listview.getTag();
+            holder = (ViewHolder) Listview.getTag();
         }
 
-        holder.images.setImageResource(logos[position]);
-        holder.products.setText(productListItem[position]);
+
+        holder.usernames.setText(countryList[position]);
+        holder.images.setImageResource(myflag[position]);
+
 
         return Listview;
     }
@@ -67,9 +70,6 @@ public class HomeAdapter extends ArrayAdapter {
 
     public static class ViewHolder {
         ImageView images;
-        TextView products;
+        TextView usernames;
     }
-
-
-
 }

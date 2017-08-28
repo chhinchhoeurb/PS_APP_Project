@@ -39,7 +39,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/rise" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:background="@color/color_btnformat"
+                    android:background="@drawable/buttonformat"
                     android:text="Let's go"
                     android:textColor="#fff" />
 

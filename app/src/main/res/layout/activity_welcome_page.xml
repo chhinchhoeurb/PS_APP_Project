@@ -17,41 +17,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp">
-
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_menu"
-                android:minHeight="?attr/actionBarSize"
-                tools:layout_editor_absoluteY="0dp"
-                tools:layout_editor_absoluteX="8dp">
-
-
-
-                <TextView
-                    android:id="@+id/btnPostBack"
-                    android:text="Back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_chevron_left_black_24dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"
-                    android:layout_marginStart="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true" />
-
-            </android.support.v7.widget.Toolbar>
-
-        </LinearLayout>
+        
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -102,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:background="#FF4D94"
+                    android:background="@color/color_btnformat"
                     android:text="Let's go"
                     android:textColor="#fff" />
 

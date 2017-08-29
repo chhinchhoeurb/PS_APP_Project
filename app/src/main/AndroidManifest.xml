@@ -21,7 +21,7 @@
         <activity android:name=".CreatePost" />
         <activity android:name=".UpdatePost" />
         <activity android:name=".PosterProfile" />
-        <activity android:name=".RegisterProfile"></activity>
+        <activity android:name=".RegisterProfile" />
     </application>
 
 </manifest>

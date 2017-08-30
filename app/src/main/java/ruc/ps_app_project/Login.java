@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,6 +33,7 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
     EditText logEmail, logPassword;
     String validateEmail, validatePassword;
+    TextView forgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,17 @@ public class Login extends AppCompatActivity {
 
             }
         });
-
+//--------------------------- Start Go To Forget Password ----------------------------------
+        forgetPassword = (TextView)findViewById(R.id.action_forgotpw);
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent forgetpassword = new Intent(Login.this,ForgotPassActivity.class);
+                startActivity(forgetpassword);
+                Toast.makeText(Login.this,"Clicked!!",Toast.LENGTH_SHORT).show();
+            }
+        });
+//--------------------------- End Go To Forget Password ----------------------------------
     }
 
 
@@ -128,7 +140,7 @@ public class Login extends AppCompatActivity {
 
     public boolean validate(){
         boolean valid = true;
-        if (validatePassword.isEmpty() || validatePassword.length() < 5){
+        if (validatePassword.isEmpty()){
             logPassword.setError("Please Enter valid Password!");
             valid = false;
         }if (validateEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(validateEmail).matches()){
@@ -149,7 +161,7 @@ public class Login extends AppCompatActivity {
         RequestParams requestParams = new RequestParams();
         requestParams.add("email",String.valueOf(logEmail.getText().toString()));
         requestParams.add("password",String.valueOf(logPassword.getText().toString()));
-//                    System.out.println(requestParams);
+        Log.i("input",requestParams.toString());
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, requestParams, new AsyncHttpResponseHandler() {
             @Override
@@ -157,10 +169,11 @@ public class Login extends AppCompatActivity {
 
                 try {
                     String data = new String(responseBody, "UTF-8");
-//                    Log.i("Data", data);
+                    Log.i("Data", data);
                     try {
                         JSONObject object = new JSONObject(data);
                         JSONArray objectUser = object.getJSONArray("data");
+                        Log.i("object",objectUser.toString());
 //                        JSONObject object = new JSONObject(data);
                         JSONObject objUser = objectUser.getJSONObject(0);
                         String username = objUser.getString("username");
@@ -176,8 +189,8 @@ public class Login extends AppCompatActivity {
                             editor.putString("userName",username);
                             editor.commit();
 
-//                            Intent goHome = new Intent(Login.this, HomeActivity.class);
-//                            startActivity(goHome);
+                            Intent goHome = new Intent(Login.this, HomeActivity.class);
+                            startActivity(goHome);
                             Toast.makeText(Login.this,"Login Success!!",Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(Login.this,"Email address or Password incorrect!",Toast.LENGTH_SHORT).show();
@@ -210,8 +223,5 @@ public class Login extends AppCompatActivity {
         });
 //                Toast.makeText(Login.this,"Login Success.",Toast.LENGTH_SHORT).show();
     }
-
-
-//});
 
 }

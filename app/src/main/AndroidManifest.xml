@@ -33,9 +33,9 @@
         <activity android:name=".PosterProfile" />
         <activity android:name=".RegisterProfile" />
         <activity android:name=".PostDetailActivity" />
-
         <activity android:name=".ConfirmCodeActivity" />
         <activity android:name=".ResetPasswordActivity"/>
+
 
     </application>
 

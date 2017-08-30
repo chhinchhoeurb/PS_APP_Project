@@ -1,6 +1,7 @@
 package ruc.ps_app_project;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,19 +18,29 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.HttpGet;
+import com.squareup.picasso.Picasso;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -136,75 +147,112 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numFav = new ArrayList<String>();
         postId = new ArrayList<String>();
         //------------------------Start get data all of post----------------------
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.get("http://192.168.1.14:1111/posts/viewAllPost", new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.i("my test","success");
-                try {
-                    String data = new String(responseBody, "UTF-8");
-                    try {
-                        JSONObject jsonObj = new JSONObject(data);
-                        JSONArray jArray = jsonObj.getJSONArray("data");
-
-                        for(int i=0; i < jArray.length(); i++){
-                            JSONObject jsonObject = jArray.getJSONObject(i);
-                            String name = jsonObject.getString("username");
-                            String description = jsonObject.getString("pos_description");
-                            String postIds = jsonObject.getString("id");
-                            String postProfile = jsonObject.getString("image");
-                            String postImg = jsonObject.getString("pos_image");
-                            String dateTime = jsonObject.getString("created_at");
-                            String likes = jsonObject.getString("numlike");
-                            String cmts = jsonObject.getString("numcmt");
-                            String favs = jsonObject.getString("numfavorite");
-
-                            users.add(name);
-                            postDesc.add(description);
-                            postPro.add(postProfile);
-                            postImage.add(postImg);
-                            dateAndTime.add(dateTime);
-                            numeLike.add(likes);
-                            numCmt.add(cmts);
-                            numFav.add(favs);
-                            postId.add(postIds);
-                            Log.i("name",postId.toString());
-                        }
-
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.i("my test","Fail");
-                try {
-                    String data = new String(responseBody, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (NullPointerException e){
-                    e.printStackTrace();
-                }
-            }
-
-        });
 
 
-        HomeAdapter homeList = new HomeAdapter(getApplicationContext(),users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
-        homeListView.setAdapter(homeList);
+
 
 
         //------------------------End get data all of post----------------------
 
+        // call AsynTask to perform network operation on separate thread
+        new HttpAsyncTask().execute("http://192.168.1.14:1111/posts/viewAllPost");
+
+
+    }
 
 
 
+    // To get API url
+    public static String GET(String url) {
+        InputStream inputStream = null;
+        String result = "";
+        try {
+
+            // create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // make GET request to the given URL
+            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+
+            // receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // convert inputstream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        return result;
+    }
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
+
+
+    class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return GET(urls[0]);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONArray jArray = jsonObj.getJSONArray("data");
+
+                for(int i=0; i < jArray.length(); i++){
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+                    String name = jsonObject.getString("username");
+                    String description = jsonObject.getString("pos_description");
+                    String postIds = jsonObject.getString("id");
+                    String postProfile = jsonObject.getString("image");
+                    String postImg = jsonObject.getString("pos_image");
+                    String dateTime = jsonObject.getString("created_at");
+                    String likes = jsonObject.getString("numlike");
+                    String cmts = jsonObject.getString("numcmt");
+                    String favs = jsonObject.getString("numfavorite");
+
+                    users.add(name);
+                    postDesc.add(description);
+                    postPro.add(postProfile);
+                    postImage.add(postImg);
+                    dateAndTime.add(dateTime);
+                    numeLike.add(likes);
+                    numCmt.add(cmts);
+                    numFav.add(favs);
+                    postId.add(postIds);
+                    Log.i("name",postId.toString());
+
+
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getBaseContext(), "not data!", Toast.LENGTH_LONG).show();
+
+            }
+
+            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
+            homeListView.setAdapter(homeList);
+
+        }
     }
 
 

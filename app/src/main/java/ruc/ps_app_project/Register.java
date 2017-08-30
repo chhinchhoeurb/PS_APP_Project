@@ -215,6 +215,12 @@ public class Register extends AppCompatActivity {
 
                 if(checkData.equals(false)){
                     if (user.equals("seller")) {
+                        //==================Sharepreference user role=============================
+                        SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = userPref.edit();
+                        editor.putString("user","seller");
+                        editor.commit();
+
                         // get text form input
                         AsyncHttpClient client = new AsyncHttpClient();
                         client.addHeader("apikey", "123");
@@ -236,12 +242,13 @@ public class Register extends AppCompatActivity {
                                             JSONObject poster_data= obj.getJSONObject("posters");
                                             String username = poster_data.getString("username");
                                             String id = poster_data.getString("id");
-                                            Toast.makeText(Register.this, "register success", Toast.LENGTH_LONG).show();
+
                                             SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
                                             SharedPreferences.Editor editor = pref.edit();
                                             editor.putString("userId",id);
                                             editor.putString("userName",username);
                                             editor.commit();
+
                                             Intent intent = new Intent(Register.this, HomeActivity.class);
                                             startActivity(intent);
                                         } else if (status.equals("fail")){
@@ -264,6 +271,13 @@ public class Register extends AppCompatActivity {
                             }
                         });
                     } else if (user.equals("buyer")) {
+                        //==================Sharepreference user role=============================
+                        SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = userPref.edit();
+                        editor.putString("user","buyer");
+                        editor.commit();
+
+
                         // get text form input
                         AsyncHttpClient client = new AsyncHttpClient();
                         client.addHeader("apikey", "123");

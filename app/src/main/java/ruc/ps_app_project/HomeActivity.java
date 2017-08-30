@@ -1,6 +1,8 @@
 package ruc.ps_app_project;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -287,7 +289,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
            // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
             //startActivity(intent);
         } else if (id == R.id.nav_Logout){
-
+            // Lgoin preference
+       
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

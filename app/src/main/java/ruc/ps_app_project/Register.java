@@ -45,6 +45,11 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
+        Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
+        if (RadioButtonState == true){
+            user = "seller";
+        }
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

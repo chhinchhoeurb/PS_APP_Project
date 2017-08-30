@@ -25,6 +25,8 @@
         <activity android:name=".UpdatePost" />
         <activity android:name=".PosterProfile" />
         <activity android:name=".RegisterProfile" />
+        <activity android:name=".ConfirmCodeActivity" />
+        <activity android:name=".ResetPasswordActivity"/>
     </application>
 
 </manifest>

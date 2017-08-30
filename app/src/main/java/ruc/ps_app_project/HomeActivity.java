@@ -66,7 +66,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                Toast.makeText(HomeActivity.this,"yes",Toast.LENGTH_LONG).show();
                 Intent detailIntent = new Intent(HomeActivity.this,PostDetailActivity.class);
                 detailIntent.putExtra("postId",postId.get(position).toString());
                // detailIntent.putExtra("userPostId",USERPOSTID.get(position).toString());

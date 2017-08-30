@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -38,11 +39,25 @@ public class Register extends AppCompatActivity {
     Button btn_register , btn_login;
     EditText username, email, password, confirmPass;
     String user = "";
+    TextView back;
     TextInputLayout TextInputConfirmPass, TextInputPassword, TextInputUsername, TextInputEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
+        Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
+        if (RadioButtonState == true){
+            user = "seller";
+        }
+        back = (TextView)findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Register.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         TextInputConfirmPass = (TextInputLayout)findViewById(R.id.TextInputConfirmPass);
         TextInputPassword = (TextInputLayout)findViewById(R.id.TextInputPass);
         TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserName);

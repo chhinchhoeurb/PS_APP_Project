@@ -145,7 +145,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //------------------------Start get data all of post----------------------
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://192.168.1.14:1111/posts/viewAllPost", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.22:2222/posts/viewAllPost", new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

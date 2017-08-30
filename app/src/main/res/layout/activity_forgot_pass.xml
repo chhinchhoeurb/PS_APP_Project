@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content" />
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/input_layout_name"
+                        android:id="@+id/TextInputEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -114,6 +114,30 @@
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
+                <!--start checkbox-->
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp">
+
+                    <RadioButton android:id="@+id/radio_seller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seller"
+                        android:textColor="@color/color_login_register_action"
+                        android:onClick="onRadioButtonClicked"/>
+
+                    <RadioButton android:id="@+id/radio_buyer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="Buyer"
+                        android:textColor="@color/color_login_register_action"
+                        android:onClick="onRadioButtonClicked"/>
+                </RadioGroup>
+                <!--End checkbox-->
 
 
                 <Button

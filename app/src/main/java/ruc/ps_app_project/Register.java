@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -39,11 +39,25 @@ public class Register extends AppCompatActivity {
     Button btn_register , btn_login;
     EditText username, email, password, confirmPass;
     String user = "";
+    TextView back;
     TextInputLayout TextInputConfirmPass, TextInputPassword, TextInputUsername, TextInputEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
+        Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
+        if (RadioButtonState == true){
+            user = "seller";
+        }
+        back = (TextView)findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Register.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         TextInputConfirmPass = (TextInputLayout)findViewById(R.id.TextInputConfirmPass);
         TextInputPassword = (TextInputLayout)findViewById(R.id.TextInputPass);
         TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserName);
@@ -90,11 +104,11 @@ public class Register extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                if(!emailValidator(email.getText().toString())){
-                    showMsgError(TextInputEmail, email,"Email is invalid!");
-                }else {
-                    hideMsgError(TextInputEmail, email,2);
-                }
+//                if(!emailValidator(email.getText().toString())){
+//                    showMsgError(TextInputEmail, email,"Email is invalid!");
+//                }else {
+//                    hideMsgError(TextInputEmail, email,2);
+//                }
             }
         });
 
@@ -200,8 +214,13 @@ public class Register extends AppCompatActivity {
                 }
 
                 if(checkData.equals(false)){
-
                     if (user.equals("seller")) {
+                        //==================Sharepreference user role=============================
+                        SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = userPref.edit();
+                        editor.putString("user","seller");
+                        editor.commit();
+
                         // get text form input
                         AsyncHttpClient client = new AsyncHttpClient();
                         client.addHeader("apikey", "123");
@@ -220,16 +239,28 @@ public class Register extends AppCompatActivity {
                                         JSONObject obj = new JSONObject(data);
                                         String status = obj.getString("status");
                                         if (status.equals("success")) {
+                                            JSONObject poster_data= obj.getJSONObject("posters");
+                                            String username = poster_data.getString("username");
+                                            String id = poster_data.getString("id");
+
+                                            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = pref.edit();
+                                            editor.putString("userId",id);
+                                            editor.putString("userName",username);
+                                            editor.commit();
+
                                             Intent intent = new Intent(Register.this, HomeActivity.class);
                                             startActivity(intent);
-                                        } else if(status.equals("fail")){
+                                        } else if (status.equals("fail")){
                                             showMsgError(TextInputEmail, email,"Email is already used!");
                                         }
                                         System.out.println(obj);
                                     } catch (Throwable t) {
+                                        Toast.makeText(Register.this, "catch1 failed", Toast.LENGTH_LONG).show();
                                         t.printStackTrace();
                                     }
                                 } catch (UnsupportedEncodingException e) {
+                                    Toast.makeText(Register.this, "catch2 failed", Toast.LENGTH_LONG).show();
                                     e.printStackTrace();
                                 }
                             }
@@ -240,6 +271,13 @@ public class Register extends AppCompatActivity {
                             }
                         });
                     } else if (user.equals("buyer")) {
+                        //==================Sharepreference user role=============================
+                        SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = userPref.edit();
+                        editor.putString("user","buyer");
+                        editor.commit();
+
+
                         // get text form input
                         AsyncHttpClient client = new AsyncHttpClient();
                         client.addHeader("apikey", "123");
@@ -254,13 +292,14 @@ public class Register extends AppCompatActivity {
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
                                     String data = new String(responseBody, "UTF-8");
-                                    Log.i("get", data);
                                     try {
                                         JSONObject obj = new JSONObject(data);
                                         String status = obj.getString("status");
-                                        String id = obj.getString("id");
-                                        String username = obj.getString("username");
+
                                         if (status.equals("success")) {
+                                            JSONObject poster_data= obj.getJSONObject("users");
+                                            String username = poster_data.getString("username");
+                                            String id = poster_data.getString("id");
                                             SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
                                             SharedPreferences.Editor editor = pref.edit();
                                             editor.putString("userId",id);

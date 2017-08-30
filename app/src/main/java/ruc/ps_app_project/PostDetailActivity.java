@@ -53,7 +53,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         // ----------------------get intent ==================================
         postID = getIntent().getStringExtra("postId");
-        Toast.makeText(PostDetailActivity.this,postID,Toast.LENGTH_LONG).show();
+        //Toast.makeText(PostDetailActivity.this,postID,Toast.LENGTH_LONG).show();
 
         //=============================back to home ===========================
         detail_back = (TextView)findViewById(R.id.back_postDetail);

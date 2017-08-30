@@ -26,8 +26,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/postprofile"/>
+                    android:layout_centerHorizontal="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,10 +100,10 @@
                     android:layout_width="60dp"
                     android:layout_height="25dp"
                     android:drawableStart="@drawable/ic_like"
-                    android:textColor="@color/color_num"
+                    android:textColor="@color/color_menu"
                     android:background="@drawable/btnlikefavoritecmt"
                     android:padding="5dp"
-                    android:text="999"
+                    android:text=""
                     android:textSize="10dp"
                     />
 
@@ -117,9 +116,9 @@
                     android:layout_marginLeft="30dp"
                     android:drawableStart="@drawable/ic_heart"
                     android:background="@drawable/btnlikefavoritecmt"
-                    android:textColor="@color/color_num"
+                    android:textColor="@color/color_menu"
                     android:padding="5dp"
-                    android:text="999"
+                    android:text=""
                     android:textSize="10dp"/>
 
                 <Button
@@ -128,10 +127,10 @@
                     android:layout_height="25dp"
                     android:layout_marginLeft="30dp"
                     android:drawableStart="@drawable/ic_cmt"
-                    android:textColor="@color/color_num"
+                    android:textColor="@color/color_menu"
                     android:background="@drawable/btnlikefavoritecmt"
                     android:padding="5dp"
-                    android:text="999"
+                    android:text=""
                     android:textSize="10dp"/>
 
             </LinearLayout>

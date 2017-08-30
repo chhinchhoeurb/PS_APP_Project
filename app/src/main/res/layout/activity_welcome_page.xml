@@ -16,14 +16,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
+        android:background="@drawable/welcom"
         tools:layout_editor_absoluteY="8dp">
-        
+
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:layout_editor_absoluteY="55dp"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="55dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,9 +49,9 @@
                     android:layout_gravity="center"
                     android:paddingTop="10dp"
                     android:text="Welcome"
-                    android:textStyle="bold"
                     android:textColor="@color/color_menu"
-                    android:textSize="22sp"/>
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
                 <!--username address-->
 
                 <TextView
@@ -59,7 +61,7 @@
                     android:paddingTop="10dp"
                     android:text="To my get what you want here.To my get what you want here.To my get what you want here."
                     android:textColor="@color/black"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
 
                 <Button

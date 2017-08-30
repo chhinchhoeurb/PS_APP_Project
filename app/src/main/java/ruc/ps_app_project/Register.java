@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -90,11 +89,11 @@ public class Register extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                if(!emailValidator(email.getText().toString())){
-                    showMsgError(TextInputEmail, email,"Email is invalid!");
-                }else {
-                    hideMsgError(TextInputEmail, email,2);
-                }
+//                if(!emailValidator(email.getText().toString())){
+//                    showMsgError(TextInputEmail, email,"Email is invalid!");
+//                }else {
+//                    hideMsgError(TextInputEmail, email,2);
+//                }
             }
         });
 
@@ -200,7 +199,6 @@ public class Register extends AppCompatActivity {
                 }
 
                 if(checkData.equals(false)){
-
                     if (user.equals("seller")) {
                         // get text form input
                         AsyncHttpClient client = new AsyncHttpClient();
@@ -220,16 +218,27 @@ public class Register extends AppCompatActivity {
                                         JSONObject obj = new JSONObject(data);
                                         String status = obj.getString("status");
                                         if (status.equals("success")) {
+                                            JSONObject poster_data= obj.getJSONObject("posters");
+                                            String username = poster_data.getString("username");
+                                            String id = poster_data.getString("id");
+                                            Toast.makeText(Register.this, "register success", Toast.LENGTH_LONG).show();
+                                            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = pref.edit();
+                                            editor.putString("userId",id);
+                                            editor.putString("userName",username);
+                                            editor.commit();
                                             Intent intent = new Intent(Register.this, HomeActivity.class);
                                             startActivity(intent);
-                                        } else if(status.equals("fail")){
+                                        } else if (status.equals("fail")){
                                             showMsgError(TextInputEmail, email,"Email is already used!");
                                         }
                                         System.out.println(obj);
                                     } catch (Throwable t) {
+                                        Toast.makeText(Register.this, "catch1 failed", Toast.LENGTH_LONG).show();
                                         t.printStackTrace();
                                     }
                                 } catch (UnsupportedEncodingException e) {
+                                    Toast.makeText(Register.this, "catch2 failed", Toast.LENGTH_LONG).show();
                                     e.printStackTrace();
                                 }
                             }
@@ -254,13 +263,14 @@ public class Register extends AppCompatActivity {
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
                                     String data = new String(responseBody, "UTF-8");
-                                    Log.i("get", data);
                                     try {
                                         JSONObject obj = new JSONObject(data);
                                         String status = obj.getString("status");
-                                        String id = obj.getString("id");
-                                        String username = obj.getString("username");
+
                                         if (status.equals("success")) {
+                                            JSONObject poster_data= obj.getJSONObject("users");
+                                            String username = poster_data.getString("username");
+                                            String id = poster_data.getString("id");
                                             SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
                                             SharedPreferences.Editor editor = pref.edit();
                                             editor.putString("userId",id);

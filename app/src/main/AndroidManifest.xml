@@ -4,12 +4,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".WelcomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,7 +23,7 @@
         <activity android:name=".Login" />
         <activity android:name=".Register" />
         <activity android:name=".CreatePost" />
-        <activity android:name=".WelcomePageActivity" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".UpdatePost" />
         <activity android:name=".PosterProfile" />
         <activity android:name=".RegisterProfile" />

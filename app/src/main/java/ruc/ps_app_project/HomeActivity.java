@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     List<String> users;
     List<String> postId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
     ListView homeListView;
-
+    String roleUser;
     TextView registerAction,loginAction, back;
     View nav_view ;
 
@@ -62,23 +62,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+        roleUser = preProfile.getString("user","");
         // -------------------------List view--------------------------
         homeListView = (ListView)findViewById(R.id.simpleListView);
         //Event on ListView
 
 
-
-        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                Intent detailIntent = new Intent(HomeActivity.this,PostDetailActivity.class);
-                detailIntent.putExtra("postId",postId.get(position).toString());
-               // detailIntent.putExtra("userPostId",USERPOSTID.get(position).toString());
-                startActivity(detailIntent);
-            }
-        });
 
         //-----------drawer bar----------------------
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -149,8 +139,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numFav = new ArrayList<String>();
         postId = new ArrayList<String>();
         //------------------------Start get data all of post----------------------
-
-
 
 
 
@@ -251,7 +239,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
+            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),
+                    roleUser,postId,users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
             homeListView.setAdapter(homeList);
 
         }
@@ -289,8 +278,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
            // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
             //startActivity(intent);
         } else if (id == R.id.nav_Logout){
-            // Lgoin preference
-       
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

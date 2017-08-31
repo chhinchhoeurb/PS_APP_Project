@@ -138,11 +138,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numCmt = new ArrayList<String>();
         numFav = new ArrayList<String>();
         postId = new ArrayList<String>();
-        //------------------------Start get data all of post----------------------
 
-
-
-        //------------------------End get data all of post----------------------
 
         // call AsynTask to perform network operation on separate thread
         new HttpAsyncTask().execute("http://192.168.1.14:1111/posts/viewAllPost");

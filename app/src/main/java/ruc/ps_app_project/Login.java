@@ -54,10 +54,10 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 onRadioButtonClicked(view);
                 if (user == "seler"){
-                    url = "http://192.168.1.22:2222/users/login";
+                    url = "http://192.168.1.10:1111/users/login";
 //                    System.out.println(url);
                 }else{
-                    url = "http://192.168.1.22:2222/posters/login";
+                    url = "http://192.168.1.10:1111/posters/login";
                 }
                 login();
 
@@ -183,11 +183,11 @@ public class Login extends AppCompatActivity {
                         String aa = "";
 
                         if (checkStatus.equals("success")){
-                            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("userId",id);
-                            editor.putString("userName",username);
-                            editor.commit();
+//                            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = pref.edit();
+//                            editor.putString("userId",id);
+//                            editor.putString("userName",username);
+//                            editor.commit();
 
                             Intent goHome = new Intent(Login.this, HomeActivity.class);
                             startActivity(goHome);

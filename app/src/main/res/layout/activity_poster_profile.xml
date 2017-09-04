@@ -29,17 +29,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@drawable/postprofile"/>
+                    android:background="@drawable/dj"/>
 
-                <!--<ImageView-->
-                <!--android:id="@+id/imageView"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="65dp"-->
-                <!--android:src="@drawable/profile" />-->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circle_image"
                     android:layout_width="100dp"
@@ -48,7 +39,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="97dp"
-                    android:src="@drawable/postprofile"
+                    android:src="@drawable/dj"
                     app:border_color="@color/white"
                     app:border_width="2dp" />
 
@@ -119,7 +110,7 @@
             android:weightSum="1">
 
             <ListView
-                android:id="@+id/simpleListView"
+                android:id="@+id/listViewPoster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -130,31 +121,6 @@
 
 
     </LinearLayout>
-
-
-
-    <!--&lt;!&ndash;start listview&ndash;&gt;-->
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--tools:layout_editor_absoluteY="250dp"-->
-    <!--tools:layout_editor_absoluteX="8dp"-->
-    <!--android:weightSum="1">-->
-
-    <!--<ListView-->
-    <!--android:id="@+id/simpleListView"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="311dp"-->
-    <!--android:divider="@color/material_blue_grey_800"-->
-    <!--android:dividerHeight="1dp"-->
-    <!--android:listSelector="#0f0"-->
-    <!--android:footerDividersEnabled="true" />-->
-    <!--</LinearLayout>-->
-
-
-
-    <!--End listview-->
 
 
 </android.support.constraint.ConstraintLayout>

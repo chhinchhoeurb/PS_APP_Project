@@ -54,6 +54,11 @@ public class Register extends AppCompatActivity {
             editor.putString("user","seller");
             editor.commit();
             user = "seller";
+            //==================Sharepreference user role=============================
+            SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userPref.edit();
+            editor.putString("user","seller");
+            editor.commit();
         }
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -235,7 +240,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.6:8888/posters/register", requestParams, new AsyncHttpResponseHandler() {
+                        client.post("http://192.168.1.14:1111/posters/register", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {

@@ -60,8 +60,7 @@ public class PostDetailActivity extends AppCompatActivity {
         detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goHomeIntent = new Intent(PostDetailActivity.this,HomeActivity.class);
-                startActivity(goHomeIntent);
+                onBackPressed();
             }
         });
 
@@ -154,6 +153,12 @@ public class PostDetailActivity extends AppCompatActivity {
                 .into(imgView);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();  // optional depending on your needs
+    }
 
 
 }

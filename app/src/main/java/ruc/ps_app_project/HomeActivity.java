@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     List<String> users;
     List<String> postId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
     ListView homeListView;
-
+    String roleUser;
     TextView registerAction,loginAction, back;
     View nav_view ;
 
@@ -56,23 +56,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+        roleUser = preProfile.getString("user","");
         // -------------------------List view--------------------------
         homeListView = (ListView)findViewById(R.id.simpleListView);
         //Event on ListView
 
 
-
-        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                Intent detailIntent = new Intent(HomeActivity.this,PostDetailActivity.class);
-                detailIntent.putExtra("postId",postId.get(position).toString());
-               // detailIntent.putExtra("userPostId",USERPOSTID.get(position).toString());
-                startActivity(detailIntent);
-            }
-        });
 
         //-----------drawer bar----------------------
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -142,10 +132,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numCmt = new ArrayList<String>();
         numFav = new ArrayList<String>();
         postId = new ArrayList<String>();
-        //------------------------Start get data all of post----------------------
 
-
-        //------------------------End get data all of post----------------------
 
         // call AsynTask to perform network operation on separate thread
         new HttpAsyncTask().execute("http://192.168.1.14:1111/posts/viewAllPost");
@@ -242,7 +229,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
+            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),
+                    roleUser,postId,users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
             homeListView.setAdapter(homeList);
 
         }
@@ -308,7 +296,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(HomeActivity.this,"Logout Successful.",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, Login.class);
             startActivity(intent);
-       
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

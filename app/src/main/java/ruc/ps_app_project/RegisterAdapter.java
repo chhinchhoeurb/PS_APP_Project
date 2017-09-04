@@ -9,21 +9,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
 public class RegisterAdapter extends ArrayAdapter {
-    int logos[];
+    List<String> POSTTITLE,FAVORITEIMAGE;
+
     Context context;
-    String productListItem[];
-    public RegisterAdapter(@NonNull Context applicationContext, String[] productListItem, int[] logo) {
-        super(applicationContext,R.layout.activity_gridview);
+
+    public RegisterAdapter(@NonNull Context applicationContext, List<String> pos_title, List<String> fav_pos) {
+        super(applicationContext,R.layout.activity_gridview_favorite);
         this.context = applicationContext;
-        this.logos = logo;
-        this.productListItem = productListItem;
+        this.POSTTITLE = pos_title;
+        this.FAVORITEIMAGE = fav_pos;
 
     }
 
     @Override
     public int getCount() {
-        return logos.length;
+        return POSTTITLE.size();
     }
 
     @Override
@@ -38,36 +43,48 @@ public class RegisterAdapter extends ArrayAdapter {
 
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        View Listview = view;
+    public View getView(int i, View view, ViewGroup parent) {
+        View Gridview = view;
         ViewHolder holder;
 
-        if (Listview == null){
+        if (Gridview == null){
 
             LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            Listview = mInflater.inflate(R.layout.activity_gridview, parent, false);
+            Gridview = mInflater.inflate(R.layout.activity_gridview_favorite, parent, false);
 
             holder = new RegisterAdapter.ViewHolder();
 
-            holder.images = (ImageView) Listview.findViewById(R.id.iconGridview);
-            holder.products = (TextView) Listview.findViewById(R.id.productList);
+            holder.fav_image = (ImageView) Gridview.findViewById(R.id.fav_pro);
+            holder.pos_title = (TextView) Gridview.findViewById(R.id.title_pro);
 
-            Listview.setTag(holder);
+            Gridview.setTag(holder);
         }else {
 
-            holder = (RegisterAdapter.ViewHolder) Listview.getTag();
+            holder = (RegisterAdapter.ViewHolder) Gridview.getTag();
         }
 
-        holder.images.setImageResource(logos[position]);
-        holder.products.setText(productListItem[position]);
+        // post image
+        final String postImageurl = "http://192.168.1.6:8888/images/posts/"+FAVORITEIMAGE.get(i);
+        loadImagePost(postImageurl,holder.fav_image);
+        holder.pos_title.setText(POSTTITLE.get(i));
 
-        return Listview;
+        return Gridview;
     }
 
 
     public static class ViewHolder {
-        ImageView images;
-        TextView products;
+        ImageView fav_image;
+        TextView pos_title;
+    }
+    // To load image of post
+    private void loadImagePost(String url,ImageView imgView){
+        Picasso.with(context)
+                .load(url)
+                .resize(1300,1200)
+                .centerInside()// to zoom img
+                //.centerCrop()
+                .into(imgView);
+
     }
 
 

@@ -20,26 +20,20 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.loopj.android.http.HttpGet;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.HttpGet;
-import com.squareup.picasso.Picasso;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
@@ -267,6 +261,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_manage_favorite) {
 
         } else if (id == R.id.nav_manage_profile) {
+            SharedPreferences preferProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            String userRole = preferProfile.getString("user","");
+            if(userRole.equals("seller")){
+                Toast.makeText(HomeActivity.this, userRole, Toast.LENGTH_LONG).show();
+                Intent intent= new Intent(HomeActivity.this, PosterProfile.class);
+                startActivity(intent);
+            }else if(userRole.equals("buyer")){
+                Toast.makeText(HomeActivity.this, userRole, Toast.LENGTH_LONG).show();
+                Intent intent= new Intent(HomeActivity.this, RegisterProfile.class);
+                startActivity(intent);
+            }else {
+
+                    Intent intent= new Intent(HomeActivity.this, Login.class);
+                    startActivity(intent);
+            }
 
         } else if (id == R.id.nav_manage_post) {
 
@@ -274,6 +283,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
            // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
             //startActivity(intent);
         } else if (id == R.id.nav_Logout){
+            SharedPreferences preferProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = preferProfile.edit();
+            edit.clear();
+            edit.commit();
+            /// Clear share Preference
+            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.commit();
+            Log.i("Clear", editor.toString());
+            Toast.makeText(HomeActivity.this,"Logout Successful.",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeActivity.this, Login.class);
+            startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

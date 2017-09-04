@@ -138,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         productID = new ArrayList<String>();
         userPostId = new ArrayList<String>();
         //------------------------Start get data all of post----------------------
-        postId = new ArrayList<String>();
+        userPostId = new ArrayList<String>();
 
 
 

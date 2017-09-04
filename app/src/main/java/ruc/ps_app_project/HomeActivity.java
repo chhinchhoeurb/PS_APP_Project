@@ -145,9 +145,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //------------------------Start get data all of post----------------------
 
 
-
-
-
         //------------------------End get data all of post----------------------
 
         // call AsynTask to perform network operation on separate thread

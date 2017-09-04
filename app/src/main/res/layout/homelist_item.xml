@@ -49,8 +49,8 @@
                         android:id="@+id/datetime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="11sp"
-                        android:textColor="@color/color_menu" />
+                        android:textColor="@color/color_menu"
+                        android:textSize="11sp" />
 
 
                 </LinearLayout>

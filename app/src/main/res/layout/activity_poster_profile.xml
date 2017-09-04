@@ -57,15 +57,6 @@
                     android:layout_alignParentStart="true"
                     android:background="@drawable/postprofile" />
 
-                <!--<ImageView-->
-                <!--android:id="@+id/imageView"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="65dp"-->
-                <!--android:src="@drawable/profile" />-->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView_profile"
                     android:layout_width="100dp"
@@ -73,6 +64,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+
                     android:layout_marginBottom="10dp"
                     android:src="@drawable/new_pro"
                     app:border_color="@color/white"
@@ -158,30 +150,6 @@
 
 
     </LinearLayout>
-
-
-    <!--&lt;!&ndash;start listview&ndash;&gt;-->
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--tools:layout_editor_absoluteY="250dp"-->
-    <!--tools:layout_editor_absoluteX="8dp"-->
-    <!--android:weightSum="1">-->
-
-    <!--<ListView-->
-    <!--android:id="@+id/simpleListView"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="311dp"-->
-    <!--android:divider="@color/material_blue_grey_800"-->
-    <!--android:dividerHeight="1dp"-->
-    <!--android:listSelector="#0f0"-->
-    <!--android:footerDividersEnabled="true" />-->
-    <!--</LinearLayout>-->
-
-
-
-    <!--End listview-->
 
 
 </android.support.constraint.ConstraintLayout>

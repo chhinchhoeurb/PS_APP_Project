@@ -240,7 +240,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.14:1111/posters/register", requestParams, new AsyncHttpResponseHandler() {
+                        client.post("http://192.168.1.10:1111/posters/register", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
@@ -296,7 +296,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.6:8888/users/register", requestParams, new AsyncHttpResponseHandler() {
+                        client.post("http://192.168.1.10:1111/users/register", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {

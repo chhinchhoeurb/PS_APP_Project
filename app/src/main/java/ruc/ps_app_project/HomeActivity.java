@@ -1,5 +1,6 @@
 package ruc.ps_app_project;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,11 +44,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ListView simpleList;
     private Spinner spinner;
     List<String> users;
-    List<String> postId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
+    List<String> productID,userPostId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
     ListView homeListView;
-    String roleUser;
+    String roleUser,userLoginID;
     TextView registerAction,loginAction, back;
-    View nav_view ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
         roleUser = preProfile.getString("user","");
+
+        SharedPreferences prefUserLogin = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        userLoginID = prefUserLogin.getString("userId","");
         // -------------------------List view--------------------------
         homeListView = (ListView)findViewById(R.id.simpleListView);
         //Event on ListView
@@ -131,11 +135,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numeLike = new ArrayList<String>();
         numCmt = new ArrayList<String>();
         numFav = new ArrayList<String>();
+        productID = new ArrayList<String>();
+        userPostId = new ArrayList<String>();
+        //------------------------Start get data all of post----------------------
         postId = new ArrayList<String>();
 
 
+
         // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://192.168.1.14:1111/posts/viewAllPost");
+        new HttpAsyncTask().execute("http://192.168.1.10:1111/posts/viewAllPost");
+
 
 
     }
@@ -201,6 +210,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     String name = jsonObject.getString("username");
                     String description = jsonObject.getString("pos_description");
                     String postIds = jsonObject.getString("id");
+                    String idUserPost = jsonObject.getString("posters_id");
                     String postProfile = jsonObject.getString("image");
                     String postImg = jsonObject.getString("pos_image");
                     String dateTime = jsonObject.getString("created_at");
@@ -216,8 +226,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     numeLike.add(likes);
                     numCmt.add(cmts);
                     numFav.add(favs);
-                    postId.add(postIds);
-                    Log.i("name",postId.toString());
+                    productID.add(postIds);
+                    userPostId.add(idUserPost);
+                    Log.i("name",productID.toString());
 
 
 
@@ -230,8 +241,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
             HomeAdapter homeList = new HomeAdapter(getApplicationContext(),
-                    roleUser,postId,users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
+                    roleUser,userLoginID,userPostId,productID,users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
             homeListView.setAdapter(homeList);
+
+            homeList.notifyDataSetChanged();
 
         }
     }
@@ -303,5 +316,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 }

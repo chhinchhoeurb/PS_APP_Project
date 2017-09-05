@@ -39,7 +39,7 @@ public class PosterProfile extends AppCompatActivity {
 
 
     ListView simpleList;
-
+    Button updatePosterInfo;
     Button btnPost, btn_cancel,btn_change_pro, btn_view_pro;
     TextView poster_name,back;
     ListView listViewPosterPost;
@@ -62,6 +62,16 @@ public class PosterProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poster_profile);
         context = PosterProfile.this;
+
+        updatePosterInfo = (Button)findViewById(R.id.update_info_poster);
+        updatePosterInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent updatePosterInfoIntent = new Intent(PosterProfile.this,EditPosterInfoActivity.class);
+                startActivity(updatePosterInfoIntent);
+            }
+        });
+
 
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

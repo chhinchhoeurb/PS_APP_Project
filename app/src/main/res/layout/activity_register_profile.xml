@@ -99,7 +99,7 @@
                     android:background="@drawable/btnposterprofile"
                     android:textColor="@color/white"
                     android:layout_width="285dp"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:text="Update Info" />
 
 

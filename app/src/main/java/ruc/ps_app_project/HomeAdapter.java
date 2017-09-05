@@ -218,14 +218,8 @@ public class HomeAdapter extends ArrayAdapter {
 
         @Override
         public void onClick(View v) {
-            if (roleUser.equals("buyer")) {
-                Intent profileIntent = new Intent(context, RegisterProfile.class);
-                context.startActivity(profileIntent);
-            } else {// poster user and end user
                 Intent profileIntent = new Intent(context, PosterProfile.class);
                 context.startActivity(profileIntent);
-            }
-
         }
     };
     //----------------------end profile page-------------

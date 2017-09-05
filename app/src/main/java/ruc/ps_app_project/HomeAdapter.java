@@ -64,7 +64,6 @@ public class HomeAdapter extends ArrayAdapter {
         this.numCmt = numCmt;
     }
 
-
     @Override
     public int getCount() {
         return username.size();
@@ -132,7 +131,8 @@ public class HomeAdapter extends ArrayAdapter {
         });
 
 
-        holder.bntCmt.setOnClickListener(new View.OnClickListener() {
+
+        holder.postImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent detailIntent = new Intent(context, PostDetailActivity.class);
@@ -160,7 +160,6 @@ public class HomeAdapter extends ArrayAdapter {
         });
 
 
-
         holder.usernames.setText(username.get(position));
         holder.createDate.setText(dateAndTime.get(position));
         holder.desc.setText(description.get(position));
@@ -168,10 +167,10 @@ public class HomeAdapter extends ArrayAdapter {
         holder.btnFav.setText(numFav.get(position));
         holder.bntCmt.setText(numCmt.get(position));
         // profile
-        final String url = "http://192.168.1.10:1111/images/posters/" + profile.get(position);
+        final String url = "http://192.168.1.17:1111/images/posters/" + profile.get(position);
         loadImage(url, holder.posterProfile);
         // post image
-        final String postImageurl = "http://192.168.1.10:1111/images/posts/" + allPostImage.get(position);
+        final String postImageurl = "http://192.168.1.17:1111/images/posts/" + allPostImage.get(position);
         loadImagePost(postImageurl, holder.postImages);
 
 

@@ -54,11 +54,7 @@ public class Register extends AppCompatActivity {
             editor.putString("user","seller");
             editor.commit();
             user = "seller";
-            //==================Sharepreference user role=============================
-            SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = userPref.edit();
-            editor.putString("user","seller");
-            editor.commit();
+
         }
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

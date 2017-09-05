@@ -38,6 +38,7 @@
                     android:layout_marginStart="5dp"
                     android:drawableStart="@drawable/ic_chevron_left_black_24dp"
                     android:textColor="@color/white"
+                    android:text="User Profile"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

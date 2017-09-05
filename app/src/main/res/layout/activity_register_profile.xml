@@ -95,7 +95,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/update_info_poster"
+                    android:id="@+id/activity_edit_user"
                     android:background="@drawable/btnposterprofile"
                     android:textColor="@color/white"
                     android:layout_width="285dp"

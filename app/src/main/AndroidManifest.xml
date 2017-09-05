@@ -38,6 +38,7 @@
         <activity android:name=".ConfirmCodeActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ClarifyAccountActivity"></activity>
+        <activity android:name=".EditUserActivity"></activity>
     </application>
 
 </manifest>

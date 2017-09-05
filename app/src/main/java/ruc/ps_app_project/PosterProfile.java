@@ -37,7 +37,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class PosterProfile extends AppCompatActivity {
 
-    Button btnPost;
+
     ListView simpleList;
 
     Button btnPost, btn_cancel,btn_change_pro, btn_view_pro;

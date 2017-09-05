@@ -120,8 +120,7 @@
                 <Button
                     android:id="@+id/update_info_poster"
                     android:layout_width="150dp"
-                    android:layout_height="28dp"
-                    android:layout_weight="0.92"
+                    android:layout_height="30dp"
                     android:background="@drawable/btnposterprofile"
                     android:text="Update Info"
                     android:textColor="@color/white" />
@@ -130,7 +129,7 @@
                 <Button
                     android:id="@+id/create_post"
                     android:layout_width="150dp"
-                    android:layout_height="29dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/btnposterprofile"
                     android:text="Create Post"

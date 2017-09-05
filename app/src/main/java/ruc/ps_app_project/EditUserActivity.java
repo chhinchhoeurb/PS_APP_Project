@@ -59,7 +59,7 @@ public class EditUserActivity extends AppCompatActivity {
 
 
 
-        //------------------------Start get data old data of post
+        //------------------------Start get data old data of user
         AsyncHttpClient client = new AsyncHttpClient();
         // client.addHeader("header_key", "header value");
 
@@ -111,10 +111,10 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
-        //--------------------------End get old post ------------------------------
+        //--------------------------End get old user ------------------------------
 
 
-        //---------------------------start update post-----------------------------
+        //---------------------------start update user-----------------------------
         btnUpdate = (TextView) findViewById(R.id.btnUpdateUser);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +225,7 @@ public class EditUserActivity extends AppCompatActivity {
 
 
 
-        //---------------------------End update post-----------------------------
+        //---------------------------End update user-----------------------------
 
 
 

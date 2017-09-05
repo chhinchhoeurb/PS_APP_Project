@@ -37,7 +37,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class PosterProfile extends AppCompatActivity {
 
-
+    String roleUser;
     ListView simpleList;
     Button updatePosterInfo;
     Button btnPost, btn_cancel,btn_change_pro, btn_view_pro;
@@ -71,6 +71,14 @@ public class PosterProfile extends AppCompatActivity {
                 startActivity(updatePosterInfoIntent);
             }
         });
+
+//        SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+//        roleUser = preProfile.getString("user","");
+//
+//        if(!roleUser.equals("seller")){
+//            updatePosterInfo.setVisibility(View.INVISIBLE);
+//
+//        }
 
 
         back = (TextView)findViewById(R.id.back);

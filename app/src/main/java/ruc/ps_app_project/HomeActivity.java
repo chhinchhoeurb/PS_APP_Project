@@ -1,5 +1,6 @@
 package ruc.ps_app_project;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,26 +21,20 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.loopj.android.http.HttpGet;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.HttpGet;
-import com.squareup.picasso.Picasso;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
@@ -49,11 +44,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ListView simpleList;
     private Spinner spinner;
     List<String> users;
-    List<String> postId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
+    List<String> productID,userPostId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
     ListView homeListView;
-
+    String roleUser,userLoginID;
     TextView registerAction,loginAction, back;
-    View nav_view ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +57,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+        roleUser = preProfile.getString("user","");
 
+        SharedPreferences prefUserLogin = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        userLoginID = prefUserLogin.getString("userId","");
         // -------------------------List view--------------------------
         homeListView = (ListView)findViewById(R.id.simpleListView);
         //Event on ListView
 
 
-
-        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                Intent detailIntent = new Intent(HomeActivity.this,PostDetailActivity.class);
-                detailIntent.putExtra("postId",postId.get(position).toString());
-               // detailIntent.putExtra("userPostId",USERPOSTID.get(position).toString());
-                startActivity(detailIntent);
-            }
-        });
 
         //-----------drawer bar----------------------
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -147,15 +135,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numeLike = new ArrayList<String>();
         numCmt = new ArrayList<String>();
         numFav = new ArrayList<String>();
-        postId = new ArrayList<String>();
+        productID = new ArrayList<String>();
+        userPostId = new ArrayList<String>();
         //------------------------Start get data all of post----------------------
+        userPostId = new ArrayList<String>();
 
-
-        //------------------------End get data all of post----------------------
 
         // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://192.168.1.14:1111/posts/viewAllPost");
-
+        new HttpAsyncTask().execute("http://192.168.1.17:1111/posts/viewAllPost");
 
     }
 
@@ -220,6 +207,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     String name = jsonObject.getString("username");
                     String description = jsonObject.getString("pos_description");
                     String postIds = jsonObject.getString("id");
+                    String idUserPost = jsonObject.getString("posters_id");
                     String postProfile = jsonObject.getString("image");
                     String postImg = jsonObject.getString("pos_image");
                     String dateTime = jsonObject.getString("created_at");
@@ -235,8 +223,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     numeLike.add(likes);
                     numCmt.add(cmts);
                     numFav.add(favs);
-                    postId.add(postIds);
-                    Log.i("name",postId.toString());
+                    productID.add(postIds);
+                    userPostId.add(idUserPost);
+                    Log.i("name",productID.toString());
 
 
 
@@ -248,8 +237,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
+            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),
+                    roleUser,userLoginID,userPostId,productID,users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
             homeListView.setAdapter(homeList);
+
+            homeList.notifyDataSetChanged();
 
         }
     }
@@ -279,20 +271,48 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_manage_favorite) {
 
         } else if (id == R.id.nav_manage_profile) {
+            SharedPreferences preferProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            String userRole = preferProfile.getString("user","");
+            if(userRole.equals("seller")){
+                Toast.makeText(HomeActivity.this, userRole, Toast.LENGTH_LONG).show();
+                Intent intent= new Intent(HomeActivity.this, PosterProfile.class);
+                startActivity(intent);
+            }else if(userRole.equals("buyer")){
+                Toast.makeText(HomeActivity.this, userRole, Toast.LENGTH_LONG).show();
+                Intent intent= new Intent(HomeActivity.this, RegisterProfile.class);
+                startActivity(intent);
+            }else {
+
+                    Intent intent= new Intent(HomeActivity.this, Login.class);
+                    startActivity(intent);
+            }
 
         } else if (id == R.id.nav_manage_post) {
 
         } else if (id == R.id.nav_change_password) {
-           // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(HomeActivity.this,ConfirmEmailChangePassActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_Logout){
-            // Lgoin preference
-       
+            SharedPreferences preferProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = preferProfile.edit();
+            edit.clear();
+            edit.commit();
+            /// Clear share Preference
+            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.commit();
+            Log.i("Clear", editor.toString());
+            Toast.makeText(HomeActivity.this,"Logout Successful.",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeActivity.this, Login.class);
+            startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 }

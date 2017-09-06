@@ -48,16 +48,22 @@ public class Register extends AppCompatActivity {
         RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
         Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
         if (RadioButtonState == true){
+            //==================Sharepreference user role=============================
+            SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userPref.edit();
+            editor.putString("user","seller");
+            editor.commit();
             user = "seller";
+
         }
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Register.this, HomeActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
+
         TextInputConfirmPass = (TextInputLayout)findViewById(R.id.TextInputConfirmPass);
         TextInputPassword = (TextInputLayout)findViewById(R.id.TextInputPass);
         TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserName);
@@ -230,7 +236,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.6:8888/posters/register", requestParams, new AsyncHttpResponseHandler() {
+                        client.post("http://192.168.1.10:1111/posters/register", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
@@ -256,18 +262,17 @@ public class Register extends AppCompatActivity {
                                         }
                                         System.out.println(obj);
                                     } catch (Throwable t) {
-                                        Toast.makeText(Register.this, "catch1 failed", Toast.LENGTH_LONG).show();
+
                                         t.printStackTrace();
                                     }
                                 } catch (UnsupportedEncodingException e) {
-                                    Toast.makeText(Register.this, "catch2 failed", Toast.LENGTH_LONG).show();
+
                                     e.printStackTrace();
                                 }
                             }
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                Toast.makeText(Register.this, "register failed", Toast.LENGTH_LONG).show();
                             }
                         });
                     } else if (user.equals("buyer")) {
@@ -287,7 +292,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.6:8888/users/register", requestParams, new AsyncHttpResponseHandler() {
+                        client.post("http://192.168.1.10:1111/users/register", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
@@ -427,5 +432,10 @@ public class Register extends AppCompatActivity {
         matcher = pattern.matcher(mailAddress);
         return matcher.matches();
 
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();  // optional depending on your needs
     }
 }

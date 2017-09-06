@@ -417,11 +417,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_manage_post) {
 
         } else if (id == R.id.nav_change_password) {
-           // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
+            // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
             //startActivity(intent);
         } else if (id == R.id.nav_Logout){
             // Lgoin preference
-       
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

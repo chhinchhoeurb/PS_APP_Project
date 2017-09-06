@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,23 +29,23 @@ import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EditUserActivity extends AppCompatActivity {
-    EditText user_name,user_mail,user_phone,user_add;
+public class EditPosterInfoActivity extends AppCompatActivity {
+    EditText seller_name, seller_mail, seller_phone, seller_add;
     String userLoginID;
     TextView btnUpdate,back_update;
     TextInputLayout TextInputConfirmPhone, TextInputAdd, TextInputUsername, TextInputEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user);
+        setContentView(R.layout.activity_edit_poster_info);
 
-        user_name = (EditText)findViewById(R.id.user_name);
-        user_mail = (EditText)findViewById(R.id.user_email);
-        user_phone = (EditText)findViewById(R.id.user_phone);
-        user_add = (EditText)findViewById(R.id.user_add);
+        seller_name = (EditText)findViewById(R.id.seller_name);
+        seller_mail = (EditText)findViewById(R.id.seller_email);
+        seller_phone = (EditText)findViewById(R.id.seller_phone);
+        seller_add = (EditText)findViewById(R.id.seller_add);
 
         //-------------------Back--------------------------
-        back_update = (TextView)findViewById(R.id.udpate_user_back);
+        back_update = (TextView)findViewById(R.id.udpate_seller_back);
         back_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,16 +53,16 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
+
         SharedPreferences prefUserLogin = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
         userLoginID = prefUserLogin.getString("userId","");
-
 
 
         //------------------------Start get data old data of user
         AsyncHttpClient client = new AsyncHttpClient();
         // client.addHeader("header_key", "header value");
 
-        client.get("http://192.168.56.1:1111/users/userProfile/"+userLoginID, new AsyncHttpResponseHandler() {
+        client.get("http://192.168.56.1:1111/posters/updateSellerInfoData/"+userLoginID, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("test","success");
@@ -71,21 +70,21 @@ public class EditUserActivity extends AppCompatActivity {
                     String data = new String(responseBody, "UTF-8");
                     try {
                         JSONObject jsonObj = new JSONObject(data);
-                        JSONArray jArray = jsonObj.getJSONArray("posterProfile");
+                        JSONArray jArray = jsonObj.getJSONArray("sellerInfo");
                         JSONObject obj = jArray.getJSONObject(0);
 
-                        String userName = obj.getString("username");
-                        String usereEmail = obj.getString("email");
-                        String userPhone = obj.getString("phone");
-                        String useradd = obj.getString("address");
-                        String idInfo = obj.getString("id");
+                        String sellerName = obj.getString("username");
+                        String sellerEmail = obj.getString("email");
+                        String sellerPhone = obj.getString("phone");
+                        String sellerAdd = obj.getString("address");
+                        String idSellerInfo = obj.getString("id");
 
-                        Log.i("ddd",idInfo);
+                        Log.i("ddd",idSellerInfo);
 
-                        user_name.setText(userName);
-                        user_mail.setText(usereEmail);
-                        user_phone.setText(userPhone);
-                        user_add.setText(useradd);
+                        seller_name.setText(sellerName);
+                        seller_mail.setText(sellerEmail);
+                        seller_phone.setText(sellerPhone);
+                        seller_add.setText(sellerAdd);
 
 
 
@@ -114,55 +113,56 @@ public class EditUserActivity extends AppCompatActivity {
         //--------------------------End get old user ------------------------------
 
 
-        //---------------------------start update user-----------------------------
-        btnUpdate = (TextView) findViewById(R.id.btnUpdateUser);
+
+        //---------------------------start update post-----------------------------
+        btnUpdate = (TextView) findViewById(R.id.btnUpdateSellerInfo);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextInputConfirmPhone = (TextInputLayout)findViewById(R.id.TextInputPhone);
-                TextInputAdd = (TextInputLayout)findViewById(R.id.TextInputAdd);
-                TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserName);
-                TextInputEmail = (TextInputLayout)findViewById(R.id.TextInputEmail);
+                TextInputConfirmPhone = (TextInputLayout)findViewById(R.id.TextInputPhoneP);
+                TextInputAdd = (TextInputLayout)findViewById(R.id.TextInputAddP);
+                TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserNameP);
+                TextInputEmail = (TextInputLayout)findViewById(R.id.TextInputEmailP);
 
                 AsyncHttpClient client = new AsyncHttpClient();
 
-                String newUserName = user_name.getText().toString();
-                String newEmail = user_mail.getText().toString();
-                String newPhone = user_phone.getText().toString();
-                String newAdd = user_add.getText().toString();
+                String newUserName = seller_name.getText().toString();
+                String newEmail = seller_mail.getText().toString();
+                String newPhone = seller_phone.getText().toString();
+                String newAdd = seller_add.getText().toString();
 
                 Boolean checkData = false;
-                if(user_name.length()== 0){
-                    showMsgError(TextInputUsername, user_name, "User name is required!");
+                if(seller_name.length()== 0){
+                    showMsgError(TextInputUsername, seller_name, "User name is required!");
                 }else{
-                    hideMsgError(TextInputUsername, user_name,2);
+                    hideMsgError(TextInputUsername, seller_name,2);
                 }
-                if(user_mail.length()==0){
-                    showMsgError(TextInputEmail, user_mail,"Email is required!");
+                if(seller_mail.length()==0){
+                    showMsgError(TextInputEmail, seller_mail,"Email is required!");
                 }else {
                     checkData = true;
-                  hideMsgError(TextInputEmail, user_mail,2);
+                    hideMsgError(TextInputEmail, seller_mail,2);
                 }
-                if(!emailValidator(user_mail.getText().toString())){
-                    showMsgError(TextInputEmail, user_mail,"Email is invalid!");
+                if(!emailValidator(seller_mail.getText().toString())){
+                    showMsgError(TextInputEmail, seller_mail,"Email is invalid!");
                     checkData = true;
                 }else {
-                    hideMsgError(TextInputEmail, user_mail,2);
-                }
-
-                if(user_phone.length()==0){
-                    showMsgError(TextInputConfirmPhone, user_phone,"Phone is required!");
-                }else {
-                    checkData = true;
-                    hideMsgError(TextInputConfirmPhone, user_phone,2);
+                    hideMsgError(TextInputEmail, seller_mail,2);
                 }
 
-
-                if(user_add.length()==0){
-                    showMsgError(TextInputAdd, user_add,"Address is required!");
+                if(seller_phone.length()==0){
+                    showMsgError(TextInputConfirmPhone, seller_phone,"Phone is required!");
                 }else {
                     checkData = true;
-                    hideMsgError(TextInputAdd, user_add,2);
+                    hideMsgError(TextInputConfirmPhone, seller_phone,2);
+                }
+
+
+                if(seller_add.length()==0){
+                    showMsgError(TextInputAdd, seller_add,"Address is required!");
+                }else {
+                    checkData = true;
+                    hideMsgError(TextInputAdd, seller_add,2);
                 }
 
 
@@ -182,12 +182,12 @@ public class EditUserActivity extends AppCompatActivity {
                                     JSONObject jsonObject = new JSONObject(data);
                                     String sms = jsonObject.getString("status");
                                     if(sms.equals("success")){
-                                        Toast.makeText(EditUserActivity.this,"success",Toast.LENGTH_LONG).show();
-                                        Intent backProfileUser = new Intent(EditUserActivity.this,RegisterProfile.class);
+                                        Toast.makeText(EditPosterInfoActivity.this,"success",Toast.LENGTH_LONG).show();
+                                        Intent backProfileUser = new Intent(EditPosterInfoActivity.this,RegisterProfile.class);
                                         startActivity(backProfileUser);
                                     }
                                     if(sms.equals("fail")){
-                                        showMsgError(TextInputEmail, user_mail,"This email is already used!");
+                                        showMsgError(TextInputEmail, seller_mail,"This email is already used!");
                                     }
 
 
@@ -204,7 +204,7 @@ public class EditUserActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             try {
-                                Toast.makeText(EditUserActivity.this,"fail",Toast.LENGTH_LONG).show();
+                                Toast.makeText(EditPosterInfoActivity.this,"fail",Toast.LENGTH_LONG).show();
                                 String data = new String(responseBody, "UTF-8");
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
@@ -216,21 +216,26 @@ public class EditUserActivity extends AppCompatActivity {
 
 
 
-            }else {
-                Toast.makeText(EditUserActivity.this, "Update is fail", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(EditPosterInfoActivity.this, "Update is fail", Toast.LENGTH_LONG).show();
 
-            }
+                }
             }
         });
 
 
 
-        //---------------------------End update user-----------------------------
+        //---------------------------End update post-----------------------------
+
+
+
 
 
 
 
     }
+
+
 
     /*
 * Set error message
@@ -275,8 +280,5 @@ public class EditUserActivity extends AppCompatActivity {
     {
         super.onBackPressed();  // optional depending on your needs
     }
-
-
-
 
 }

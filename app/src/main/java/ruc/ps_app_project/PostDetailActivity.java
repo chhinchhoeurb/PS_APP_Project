@@ -2,14 +2,13 @@ package ruc.ps_app_project;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -70,7 +69,7 @@ public class PostDetailActivity extends AppCompatActivity {
         //------------------------Start get data detail of post
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://192.168.1.14:1111/posts/postDetail/"+postID, new AsyncHttpResponseHandler() {
+        client.get("http://192.168.1.22:2222/posts/postDetail/"+postID, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -103,9 +102,6 @@ public class PostDetailActivity extends AppCompatActivity {
                         // post image
                         final String productUrlImg = "http://192.168.1.14:1111/images/posts/"+objJson.getString("pos_image");
                         loadProductImage(productUrlImg,postImage);
-
-
-
 
                     } catch (Throwable t) {
                         t.printStackTrace();

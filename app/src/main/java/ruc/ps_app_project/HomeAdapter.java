@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class HomeAdapter extends ArrayAdapter {
 
     Context context;
-    List<String> username,dateAndTime,description,profile, allPostImage,numLikes,numFav,numCmt;
+    List<String> username,dateAndTime,description,profile, allPostImage,numLikes,numFav,numCmt,cateName,cateId;
 
     public HomeAdapter(Context applicationContext, List<String> username,List<String> dateAndTime,
                        List<String> description,List<String> profile, List<String> allPostImage,
@@ -33,9 +32,6 @@ public class HomeAdapter extends ArrayAdapter {
         this.numFav = numFav;
         this.numCmt = numCmt;
     }
-
-
-
 
     @Override
     public int getCount() {

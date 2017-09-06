@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     EditText logEmail, logPassword;
     String validateEmail, validatePassword;
     TextView forgetPassword;
-
+    String port = "http://192.168.1.17:1111/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +54,10 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 onRadioButtonClicked(view);
                 if (user == "seler"){
-                    url = "http://192.168.1.10:1111/users/login";
+                    url = port+"users/login";
 //                    System.out.println(url);
                 }else{
-                    url = "http://192.168.1.10:1111/posters/login";
+                    url = port+"posters/login";
                 }
                 login();
 

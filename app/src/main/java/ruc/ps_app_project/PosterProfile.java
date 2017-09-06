@@ -55,7 +55,7 @@ public class PosterProfile extends AppCompatActivity {
     List<String> DESCRIPTION = new ArrayList<>();
     List<String> DATETIME = new ArrayList<>();
     Context context;
-
+    String port = "http://192.168.1.17:1111/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,7 @@ public class PosterProfile extends AppCompatActivity {
         //============================data of poster==========================================
         final AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("apikey", "123");
-        client.get("http://192.168.1.6:8888/posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
+        client.get(port+"posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
@@ -120,10 +120,10 @@ public class PosterProfile extends AppCompatActivity {
                         poster_name.setText(username);
 
                         // profile poster
-                        final String posterUrlImg = "http://192.168.1.6:8888/images/posters/"+profiles;
+                        final String posterUrlImg = port+"images/posters/"+profiles;
                         loadProfile(posterUrlImg,profile);
                         // post image
-                        final String productUrlImg = "http://192.168.1.6:8888/images/posters/"+covers;
+                        final String productUrlImg = port+"images/posters/"+covers;
                         loadProductImage(productUrlImg,cover);
 
                     }catch (JSONException e){
@@ -141,7 +141,7 @@ public class PosterProfile extends AppCompatActivity {
 //==============================================for all favorite post=====================================
         final AsyncHttpClient clients = new AsyncHttpClient();
         clients.addHeader("apikey", "123");
-        clients.get("http://192.168.1.6:8888/posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
+        clients.get(port+"posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -149,7 +149,7 @@ public class PosterProfile extends AppCompatActivity {
                     String data = new String(responseBody, "UTF8");
                     //Log.i("data", data);
                     try {
-                        Toast.makeText(PosterProfile.this, "yes",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PosterProfile.this, "success",Toast.LENGTH_SHORT).show();
                         JSONObject jsonObj = new JSONObject(data);
                         JSONArray user_data = jsonObj.getJSONArray("posterpost");
                         //Loop all info
@@ -178,7 +178,7 @@ public class PosterProfile extends AppCompatActivity {
                             NUMLIKE.add(likes);
                         }
                     }catch (JSONException e){
-                        Toast.makeText(PosterProfile.this, "no",Toast.LENGTH_SHORT).show();
+
                         e.printStackTrace();
                     }
                 }catch (UnsupportedEncodingException e){

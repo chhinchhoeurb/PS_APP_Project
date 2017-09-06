@@ -2,6 +2,7 @@ package ruc.ps_app_project;
 
 import android.content.ClipData;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -22,10 +23,9 @@ import cz.msebera.android.httpclient.Header;
 class CommentSingleton {
     private static CommentSingleton ourInstance = null;
     private CommentSingleton() {}
-    private CommentListAdapter adapter;
     private List<ClipData.Item> items;
     private String messages ;
-
+    String port = "http://192.168.1.17:1111/";
     static CommentSingleton getInstance() {
         if(ourInstance == null){
             ourInstance = new CommentSingleton();
@@ -37,7 +37,7 @@ class CommentSingleton {
 
     //==============================Start comment product=============================================
 
-    public void commentPost(String userLoginID,String postID, String cmtSms) {
+    public void commentPost(final CommentListAdapter adapter, String userLoginID, String postID, String cmtSms) {
         messages = cmtSms;
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -47,7 +47,7 @@ class CommentSingleton {
         requestParams.add("message",cmtSms);
 
 
-        client.post("http://192.168.1.10:1111/posts/comment", requestParams, new AsyncHttpResponseHandler() {
+        client.post(port+"posts/comment", requestParams, new AsyncHttpResponseHandler() {
             @Override
 
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -60,7 +60,7 @@ class CommentSingleton {
                         String sms = jsonObject.getString("status");
 
                         if(sms.equals("success")){
-                            adapter.add(messages);
+
                             adapter.notifyDataSetChanged();
                         }
                         Log.i("kkk",sms);

@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ListView homeListView;
     String roleUser,userLoginID;
     TextView registerAction,loginAction, back;
-
+    String port = "http://192.168.1.17:1111/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://192.168.1.17:1111/posts/viewAllPost");
+        new HttpAsyncTask().execute(port+"posts/viewAllPost");
 
     }
 

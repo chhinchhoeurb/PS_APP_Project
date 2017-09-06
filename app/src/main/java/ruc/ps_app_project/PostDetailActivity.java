@@ -65,6 +65,8 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView commentPost;
     EditText messages;
     private String  productPostID,userPostID ;
+    private CommentListAdapter detailCommentList;
+    String port = "http://192.168.1.17:1111/";
 
     List<String> cmtuser,cmtdate,cmtprofile,cmtsms;
 
@@ -88,9 +90,9 @@ public class PostDetailActivity extends AppCompatActivity {
         hideBtnComment = (LinearLayout)findViewById(R.id.btnComment);
         SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
         roleUser = preProfile.getString("user","");
-        if(!roleUser.equals("buyer")) {
-            hideBtnComment.setVisibility(View.INVISIBLE);
-        }
+//        if(!roleUser.equals("buyer")) {
+//            hideBtnComment.setVisibility(View.INVISIBLE);
+//        }
         //--------------------------End hide comment-----
 
 
@@ -134,7 +136,7 @@ public class PostDetailActivity extends AppCompatActivity {
         //------------------------Start get data detail of post
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get("http://192.168.1.10:1111/posts/postDetail/"+productPostID, new AsyncHttpResponseHandler() {
+        client.get(port+"posts/postDetail/"+productPostID, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -162,10 +164,10 @@ public class PostDetailActivity extends AppCompatActivity {
                         btnCmt.setText(objJson.getString("numcmt"));
 
                         // profile poster
-                        final String posterUrlImg = "http://192.168.1.10:1111/images/posters/"+objJson.getString("posterprofile");
+                        final String posterUrlImg = port+"images/posters/"+objJson.getString("posterprofile");
                         loadProfile(posterUrlImg,posterProfile);
                         // post image
-                        final String productUrlImg = "http://192.168.1.10:1111/images/posts/"+objJson.getString("pos_image");
+                        final String productUrlImg = port+"images/posts/"+objJson.getString("pos_image");
                         loadProductImage(productUrlImg,postImage);
 
 
@@ -217,7 +219,7 @@ public class PostDetailActivity extends AppCompatActivity {
                             Toast.makeText(PostDetailActivity.this,"kkkk",Toast.LENGTH_SHORT).show();
 
                             cmtSms = messages.getText().toString();
-                            CommentSingleton.getInstance().commentPost(userLoginID,productPostID,cmtSms);
+                            CommentSingleton.getInstance().commentPost(detailCommentList, userLoginID,productPostID,cmtSms);
 
 
                         }
@@ -240,7 +242,7 @@ public class PostDetailActivity extends AppCompatActivity {
         cmtprofile = new ArrayList<String>();
 
         // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://192.168.1.10:1111/posts/listcomment/"+productPostID);
+        new HttpAsyncTask().execute(port+"posts/listcomment/"+productPostID);
 
 
     }
@@ -423,7 +425,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
             }
 
-            CommentListAdapter detailCommentList = new CommentListAdapter(getApplicationContext(),
+             detailCommentList = new CommentListAdapter(getApplicationContext(),
                     cmtuser, cmtdate, cmtsms, cmtprofile);
             commentListview.setAdapter(detailCommentList);
             setListViewHeightBasedOnChildren(commentListview);

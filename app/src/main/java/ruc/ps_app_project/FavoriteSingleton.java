@@ -20,7 +20,7 @@ import cz.msebera.android.httpclient.Header;
 class FavoriteSingleton {
     private static FavoriteSingleton ourInstance = null;
     private FavoriteSingleton() {}
-
+    String port = "http://192.168.1.17:1111/";
     static FavoriteSingleton getInstance() {
 
         if(ourInstance == null){
@@ -39,7 +39,7 @@ class FavoriteSingleton {
         requestParams.add("posts_id",idOfProduct);
 
 
-        client.post("http://192.168.1.10:1111/posts/store", requestParams, new AsyncHttpResponseHandler() {
+        client.post(port+"posts/store", requestParams, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

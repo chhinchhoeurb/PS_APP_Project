@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="115dp"
+                    android:layout_marginStart="102dp"
                     android:drawableStart="@drawable/ic_check_black_24dp"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -78,7 +78,7 @@
                         android:drawableStart="@drawable/ic_person_black_24dp" />
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/TextInputUserName"
+                        android:id="@+id/TextInputUserNameU"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -110,7 +110,7 @@
                         android:drawableStart="@drawable/ic_email_black_24dp" />
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/TextInputEmail"
+                        android:id="@+id/TextInputEmailU"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -141,7 +141,7 @@
                         android:drawableStart="@drawable/ic_phone_black_24dp" />
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/TextInputPhone"
+                        android:id="@+id/TextInputPhoneU"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -171,7 +171,7 @@
                         android:drawableStart="@drawable/ic_contacts_black_24dp" />
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/TextInputAdd"
+                        android:id="@+id/TextInputAddU"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 

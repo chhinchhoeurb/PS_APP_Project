@@ -40,7 +40,7 @@ public class RegisterProfile extends AppCompatActivity {
     List<String> POSTER_ID = new ArrayList<>();
     List<String> FAVORITEIMAGE = new ArrayList<>();
     List<String> POSTTITLE = new ArrayList<>();
-
+    String port = "http://192.168.1.17:1111/";
 
     Context context;
 
@@ -88,7 +88,7 @@ public class RegisterProfile extends AppCompatActivity {
         //============================data of poster==========================================
         final AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("apikey", "123");
-        client.get("http://192.168.1.10:1111/users/userProfile/"+userId, new AsyncHttpResponseHandler(){
+        client.get(port+"users/userProfile/"+userId, new AsyncHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
@@ -106,10 +106,10 @@ public class RegisterProfile extends AppCompatActivity {
                         register_name.setText(register_names);
 
                         // profile poster
-                        final String posterUrlImg = "http://192.168.1.10:1111/users/userProfile//images/users/"+profiles;
+                        final String posterUrlImg = port+"users/userProfile/images/users/"+profiles;
                         loadProfile(posterUrlImg,profile);
                         // post image
-                        final String productUrlImg = "http://192.168.1.10:1111/users/userProfile//images/users/"+covers;
+                        final String productUrlImg = port+"users/userProfile/images/users/"+covers;
                         loadProductImage(productUrlImg,cover);
 
                     }catch (JSONException e){
@@ -129,7 +129,7 @@ public class RegisterProfile extends AppCompatActivity {
 
         //==============================================for all favorite post=====================================
 
-        client.get("http://192.168.1.10:1111/users/viewUserFavorite/"+userId, new AsyncHttpResponseHandler() {
+        client.get(port+"users/viewUserFavorite/"+userId, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

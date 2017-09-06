@@ -17,6 +17,7 @@ import cz.msebera.android.httpclient.Header;
 public class ConfirmCodeActivity extends AppCompatActivity {
     Button btn_continue_reset;
     EditText verifyCode;
+    String port = "http://192.168.1.17:1111/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
                 requestParams.add("confirmcode",String.valueOf(verifyCode).toString());
 //                if ("confirmcode".equals(verifyCode)){
                     AsyncHttpClient goToResetPass = new AsyncHttpClient();
-                    goToResetPass.post("http://192.168.1.22:2222/users/resetForgotPass", requestParams, new AsyncHttpResponseHandler() {
+                    goToResetPass.post(port+"users/resetForgotPass", requestParams, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 //                            Intent intent = new Intent(ConfirmCodeActivity.this, ResetPasswordActivity.class);

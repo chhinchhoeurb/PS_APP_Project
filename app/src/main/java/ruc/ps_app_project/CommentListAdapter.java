@@ -25,7 +25,7 @@ public class CommentListAdapter extends ArrayAdapter {
 
     Context context;
     List<String> userComment, dateComment, smsComment, profileComment;
-
+    String port = "http://192.168.1.17:1111/";
 
     public CommentListAdapter(Context applicationContext,List<String> userComment,
                               List<String> dateComment,List<String> smsComment, List<String> profileComment) {
@@ -86,7 +86,7 @@ public class CommentListAdapter extends ArrayAdapter {
         //loadImage(url, holder.profileCmt);
 
         new DownloadImageTask((ImageView) Listview.findViewById(R.id.cmt_image))
-                .execute("http://192.168.1.10:1111/images/users/"+profileComment.get(position));
+                .execute(port+"images/users/"+profileComment.get(position));
 
         return Listview;
 

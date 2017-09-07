@@ -18,7 +18,7 @@ public class PosterAdapter extends ArrayAdapter {
 
     Context context;
     List<String> USERNAME,DATETIME,DESCRIPTION,PROFILE, POSTIMAGE,NUMLIKE,NUMFAV,NUMCMT;
-
+    String port = "http://192.168.1.17:1111/";
     public PosterAdapter(Context context, List<String> username,List<String> dateAndTime,
                        List<String> description,List<String> profile, List<String> allPostImage,
                        List<String> numLikes,List<String> numFav,List<String> numCmt) {
@@ -70,10 +70,10 @@ public class PosterAdapter extends ArrayAdapter {
         holder.bntCmt.setText(NUMCMT.get(i));
 
         // profile
-        final String url = "http://192.168.1.6:8888/images/posters/"+PROFILE.get(i);
+        final String url = port+"images/posters/"+PROFILE.get(i);
         loadImage(url,holder.pro_image );
         // post image
-        final String postImageurl = "http://192.168.1.6:8888/images/posts/"+POSTIMAGE.get(i);
+        final String postImageurl = port+"images/posts/"+POSTIMAGE.get(i);
         loadImagePost(postImageurl,holder.pos_image);
 
         return vi;

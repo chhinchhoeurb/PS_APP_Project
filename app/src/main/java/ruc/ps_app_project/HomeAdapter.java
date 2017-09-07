@@ -24,7 +24,12 @@ public class HomeAdapter extends ArrayAdapter {
 
     List<String> userPostId, productID, username, dateAndTime, description, profile, allPostImage, numLikes, numFav, numCmt;
     String roleUser,userLoginID;
-    public HomeAdapter(Context applicationContext, List<String> userPostId, List<String> productID,
+
+//     public HomeAdapter(Context applicationContext, List<String> userPostId, List<String> productID,
+
+    String port = "http://192.168.1.17:1111/";
+    public HomeAdapter(Context applicationContext, String roleUser,String userLoginID, List<String> userPostId, List<String> productID,
+
                        List<String> username, List<String> dateAndTime,
                        List<String> description, List<String> profile, List<String> allPostImage,
                        List<String> numLikes) {
@@ -149,10 +154,10 @@ public class HomeAdapter extends ArrayAdapter {
         holder.btnFav.setText(numFav.get(position));
         holder.bntCmt.setText(numCmt.get(position));
         // profile
-        final String url = "http://192.168.1.17:1111/images/posters/" + profile.get(position);
+        final String url = port+"images/posters/" + profile.get(position);
         loadImage(url, holder.posterProfile);
         // post image
-        final String postImageurl = "http://192.168.1.17:1111/images/posts/" + allPostImage.get(position);
+        final String postImageurl = port+"images/posts/" + allPostImage.get(position);
         loadImagePost(postImageurl, holder.postImages);
 
 

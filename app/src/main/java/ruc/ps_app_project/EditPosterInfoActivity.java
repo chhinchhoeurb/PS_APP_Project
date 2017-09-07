@@ -10,6 +10,8 @@ import android.os.Build;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -34,10 +36,16 @@ public class EditPosterInfoActivity extends AppCompatActivity {
     String userLoginID;
     TextView btnUpdate,back_update;
     TextInputLayout TextInputConfirmPhone, TextInputAdd, TextInputUsername, TextInputEmail;
+    String port = "http://192.168.1.17:1111/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_poster_info);
+
+        TextInputConfirmPhone = (TextInputLayout)findViewById(R.id.TextInputPhoneP);
+        TextInputAdd = (TextInputLayout)findViewById(R.id.TextInputAddP);
+        TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserNameP);
+        TextInputEmail = (TextInputLayout)findViewById(R.id.TextInputEmailP);
 
         seller_name = (EditText)findViewById(R.id.seller_name);
         seller_mail = (EditText)findViewById(R.id.seller_email);
@@ -62,7 +70,7 @@ public class EditPosterInfoActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         // client.addHeader("header_key", "header value");
 
-        client.get("http://192.168.56.1:1111/posters/updateSellerInfoData/"+userLoginID, new AsyncHttpResponseHandler() {
+        client.get(port+"posters/updateSellerInfoData/"+userLoginID, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("test","success");
@@ -114,15 +122,89 @@ public class EditPosterInfoActivity extends AppCompatActivity {
 
 
 
+        // username required
+        seller_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0)
+                {
+                    hideMsgError(TextInputUsername, seller_name,2);
+                }else{
+                    showMsgError(TextInputUsername, seller_name,"User name is required!");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        // Email required
+        seller_mail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0)
+                {
+                    hideMsgError(TextInputEmail, seller_mail,2);
+                }else{
+                    showMsgError(TextInputEmail, seller_mail,"Email is required!");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+
+        // phone required
+        seller_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0)
+                {
+                    hideMsgError(TextInputConfirmPhone, seller_phone,2);
+                }else{
+                    showMsgError(TextInputConfirmPhone, seller_phone,"Phone is required!");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        // address required
+        seller_add.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0)
+                {
+                    hideMsgError(TextInputAdd, seller_add,2);
+                }else{
+                    showMsgError(TextInputAdd, seller_add,"Address is required!");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+
         //---------------------------start update post-----------------------------
         btnUpdate = (TextView) findViewById(R.id.btnUpdateSellerInfo);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextInputConfirmPhone = (TextInputLayout)findViewById(R.id.TextInputPhoneP);
-                TextInputAdd = (TextInputLayout)findViewById(R.id.TextInputAddP);
-                TextInputUsername = (TextInputLayout)findViewById(R.id.TextInputUserNameP);
-                TextInputEmail = (TextInputLayout)findViewById(R.id.TextInputEmailP);
 
                 AsyncHttpClient client = new AsyncHttpClient();
 
@@ -132,38 +214,46 @@ public class EditPosterInfoActivity extends AppCompatActivity {
                 String newAdd = seller_add.getText().toString();
 
                 Boolean checkData = false;
-                if(seller_name.length()== 0){
+
+                if(newUserName.length()== 0){
+                    checkData = true;
                     showMsgError(TextInputUsername, seller_name, "User name is required!");
                 }else{
                     hideMsgError(TextInputUsername, seller_name,2);
                 }
-                if(seller_mail.length()==0){
+                //Email
+                if(newEmail.length()==0){
                     showMsgError(TextInputEmail, seller_mail,"Email is required!");
-                }else {
                     checkData = true;
+                }else {
                     hideMsgError(TextInputEmail, seller_mail,2);
                 }
-                if(!emailValidator(seller_mail.getText().toString())){
+
+
+                if(!emailValidator(newEmail)){
                     showMsgError(TextInputEmail, seller_mail,"Email is invalid!");
                     checkData = true;
                 }else {
                     hideMsgError(TextInputEmail, seller_mail,2);
+
                 }
 
-                if(seller_phone.length()==0){
+                //Phone
+                if(newPhone.length()==0){
                     showMsgError(TextInputConfirmPhone, seller_phone,"Phone is required!");
-                }else {
                     checkData = true;
+                }else {
                     hideMsgError(TextInputConfirmPhone, seller_phone,2);
                 }
 
-
-                if(seller_add.length()==0){
+                //Phone
+                if(newAdd.length()==0){
                     showMsgError(TextInputAdd, seller_add,"Address is required!");
-                }else {
                     checkData = true;
+                }else {
                     hideMsgError(TextInputAdd, seller_add,2);
                 }
+
 
 
                 if(checkData.equals(false)){
@@ -172,8 +262,7 @@ public class EditPosterInfoActivity extends AppCompatActivity {
                     requestParams.add("email",newEmail);
                     requestParams.add("phone",newPhone);
                     requestParams.add("address",newAdd);
-
-                    client.post("http://192.168.56.1:1111/users/updateUserInfo/"+userLoginID, requestParams, new AsyncHttpResponseHandler() {
+                    client.post(port+"posters/updatePosterInfo/"+userLoginID, requestParams, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             try {
@@ -181,12 +270,18 @@ public class EditPosterInfoActivity extends AppCompatActivity {
                                 try {
                                     JSONObject jsonObject = new JSONObject(data);
                                     String sms = jsonObject.getString("status");
+
                                     if(sms.equals("success")){
                                         Toast.makeText(EditPosterInfoActivity.this,"success",Toast.LENGTH_LONG).show();
-                                        Intent backProfileUser = new Intent(EditPosterInfoActivity.this,RegisterProfile.class);
+                                        Intent backProfileUser = new Intent(EditPosterInfoActivity.this,PosterProfile.class);
                                         startActivity(backProfileUser);
                                     }
-                                    if(sms.equals("fail")){
+                                    else if(sms.equals("fail")){
+                                       //
+                                        Toast.makeText(EditPosterInfoActivity.this,"No data change",Toast.LENGTH_LONG).show();
+                                        Intent backProfileUser = new Intent(EditPosterInfoActivity.this,PosterProfile.class);
+                                        startActivity(backProfileUser);
+                                    }else if (sms.equals("existingEmail")){
                                         showMsgError(TextInputEmail, seller_mail,"This email is already used!");
                                     }
 
@@ -204,7 +299,7 @@ public class EditPosterInfoActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             try {
-                                Toast.makeText(EditPosterInfoActivity.this,"fail",Toast.LENGTH_LONG).show();
+                                Toast.makeText(EditPosterInfoActivity.this,"failure",Toast.LENGTH_LONG).show();
                                 String data = new String(responseBody, "UTF-8");
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
@@ -226,10 +321,6 @@ public class EditPosterInfoActivity extends AppCompatActivity {
 
 
         //---------------------------End update post-----------------------------
-
-
-
-
 
 
 

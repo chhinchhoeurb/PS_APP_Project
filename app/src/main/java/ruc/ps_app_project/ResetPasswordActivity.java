@@ -38,7 +38,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     Button resetPassword;
     TextView goToForgotPass;
     TextInputLayout TextInputVerifyCode, TextInputNewPassword, extInputConfirmPass;
-
+    String port = "http://192.168.1.17:1111/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,10 +169,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         String getUrl = "";
                         Log.i("url",url);
                         Log.i("email",email);
-                        if (url.equals("http://192.168.1.22:2222/posters/sendMail")){
-                            getUrl = "http://192.168.1.22:2222/posters/resetForgotPass";
+                        if (url.equals(port+"posters/sendMail")){
+                            getUrl = port+"posters/resetForgotPass";
                         }else{
-                            getUrl = "http://192.168.1.22:2222/users/resetForgotPass" ;
+                            getUrl = port+"users/resetForgotPass" ;
                         }
                         RequestParams requestParams = new RequestParams();
                         requestParams.add("email",String.valueOf(email));

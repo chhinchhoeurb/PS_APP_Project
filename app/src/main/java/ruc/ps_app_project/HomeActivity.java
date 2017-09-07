@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ListView homeListView,categoriesListView;
 
     TextView registerAction,loginAction, back;
+
     View nav_view ;
     String cat_name;
 
@@ -80,6 +81,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     };
     //---------------------------- End Tag bar --------------------------
+
+    String port = "http://192.168.1.17:1111/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,116 +160,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-        //------------------------------------start Spinner-------------------------------------
-
-//        final List<String> categories = new ArrayList<String>();
-//
-//        AsyncHttpClient dropdown = new AsyncHttpClient();
-//        dropdown.get("http://192.168.1.22:2222/posts/categories", new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//
-//                try {
-//                    String data = new String(responseBody,"UTF-8");
-//                    try {
-//                        JSONObject object = new JSONObject(data);
-//                        Log.i("object",object.toString());
-//                        JSONArray arrayObject = object.getJSONArray("categories");
-//                        int leng = arrayObject.length();
-//                        Log.i("arrayObject", String.valueOf(leng));
-//                        Log.i("arrayObject",arrayObject.toString());
-//                        int i;
-//                        categories.add("Categories");
-//                        for (i = 0; i <= arrayObject.length(); i++){
-//                        JSONObject jsonObject = arrayObject.getJSONObject(i);
-//                            cat_name = jsonObject.getString("cat_name");
-//
-//                            categories.add(cat_name);
-//                            Log.i("Add_to_menu",categories.toString());
-//                            Log.i("indexI", String.valueOf(i));
-//                            Spinner spinner = (Spinner) navigationView.getMenu().findItem(R.id.nav_categories).getActionView();
-//                            spinner.setAdapter(new ArrayAdapter<String>(HomeActivity.this,android.R.layout.simple_spinner_dropdown_item,categories));
-//
-//                            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                                @Override
-//                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                                    Log.i("catOfName", String.valueOf(categories.indexOf(1)));
-////                                Log.i("ABC",categories.toString());
-////                                Toast.makeText(HomeActivity.this, categories.get(position),Toast.LENGTH_SHORT).show();
-////                                System.out.println(categories.equals("Categories"));
-////
-////                                if (categories.equals(true)){
-////                                    Toast.makeText(HomeActivity.this, "Yes",Toast.LENGTH_SHORT).show();
-//////                                    Intent intent = new Intent(HomeActivity.this,Login.class);
-//////                                    startActivity(intent);
-////                                }
-////                                else{
-////                                    Toast.makeText(HomeActivity.this, "No",Toast.LENGTH_SHORT).show();
-////                                }
-//////                                else if (categories.equals("Beauty and Health Care")){
-//////                                    Toast.makeText(HomeActivity.this,"No",Toast.LENGTH_SHORT).show();
-//////                                }
-////                                System.out.println(position);
-//                                }
-//                                @Override
-//                                public void onNothingSelected(AdapterView<?> parent) {
-////                                Toast.makeText(HomeActivity.this,"No",Toast.LENGTH_SHORT).show();
-//                                }
-//
-//                            });
-//                        }
-//
-//
-////                        if (categories.equals("Categories")){
-////                            Toast.makeText(HomeActivity.this, "Yes",Toast.LENGTH_SHORT).show();
-////                        }else{
-////                            Toast.makeText(HomeActivity.this, "No",Toast.LENGTH_SHORT).show();
-////                        }
-//
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//            }
-//        });
-        // Spinner Drop down elements
-//        final List<String> categories = new ArrayList<String>();
-//        categories.add("Automobile");
-//        categories.add("Business Services");
-//        categories.add("Computers");
-//        categories.add("Education");
-//        categories.add("Personal");
-//        categories.add("Travel");
-//
-//        Spinner spinner = (Spinner) navigationView.getMenu().findItem(R.id.nav_categories).getActionView();
-//        spinner.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,categories));
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-////                Toast.makeText(HomeActivity.this, categories.get(position),Toast.LENGTH_SHORT).show();
-//                if (categories.equals("Automobile")){
-//                    Toast.makeText(HomeActivity.this, categories.get(position),Toast.LENGTH_SHORT).show();
-//                }else if (categories.equals("Automobile")){
-//                    Toast.makeText(HomeActivity.this, categories.get(position),Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
-
-
-        //----------------------------------End spinner----------------------------------------
-
         users = new ArrayList<String>();
         postDesc = new ArrayList<String>();
         postPro = new ArrayList<String>();
@@ -283,9 +177,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //------------------------End get data all of post----------------------
 
         // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://192.168.1.22:2222/posts/viewAllPost");
+//         new HttpAsyncTask().execute("http://192.168.1.22:2222/posts/viewAllPost");
 //        new HttpAsyncTaskCategories().execute("http://192.168.1.22:2222/posts/categories");
-
+        new HttpAsyncTask().execute(port+"posts/viewAllPost");
     }
 
 

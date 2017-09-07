@@ -35,7 +35,10 @@ public class ForgotPassActivity extends AppCompatActivity {
     EditText email;
     String extraEmail, user, url;
     TextInputLayout TextInputEmail;
+
     TextView goToLogin;
+
+    String port = "http://192.168.1.17:1111/";
 
 
     @Override

@@ -40,6 +40,10 @@ public class Login extends AppCompatActivity {
     String user = "";
     Button btnLogin;
     EditText logEmail, logPassword;
+
+    String validateEmail, validatePassword;
+    TextView forgetPassword;
+    String port = "http://192.168.1.17:1111/";
     TextView forgetPassword,register,back;
     TextInputLayout TextInputEmail,TextInputPassword;
 
@@ -110,11 +114,14 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onRadioButtonClicked(view);
+                if (user == "seler"){
+                    url = port+"users/login";
+//                    System.out.println(url);
+                }else{
+                    url = port+"posters/login";
 
-//                RequestParams requestParams = new RequestParams();
-//                requestParams.add("email",String.valueOf(logEmail.getText().toString()));
-//                requestParams.add("password",String.valueOf(logPassword.getText().toString()));
-//                Log.i("input",requestParams.toString());
+
 
             Log.i("userStatus", user);
                 //For validation
@@ -139,6 +146,7 @@ public class Login extends AppCompatActivity {
                     checkData = true;
                 }else {
                     hideMsgError(TextInputPassword, logPassword,2);
+
                 }
                 if(checkData.equals(false)) {
                     if (user.equals("seller")) {
@@ -147,7 +155,7 @@ public class Login extends AppCompatActivity {
                         requestParams.add("password",String.valueOf(logPassword.getText().toString()));
                         Log.i("input",requestParams.toString());
                         AsyncHttpClient client = new AsyncHttpClient();
-                        client.post("http://192.168.1.22:2222/posters/login", requestParams, new AsyncHttpResponseHandler() {
+                        client.post(port+"posters/login", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
 
@@ -180,20 +188,8 @@ public class Login extends AppCompatActivity {
                                             Toast.makeText(Login.this, "Email or Password is wrong!", Toast.LENGTH_SHORT).show();
                                         }
 
-//                                        if (checkStatus.equals("success")) {
-//                                            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-//                                            SharedPreferences.Editor editor = pref.edit();
-//                                            editor.putString("userId", id);
-//                                            editor.putString("userName", username);
-//                                            editor.commit();
-//
-//                                            Intent goHome = new Intent(Login.this, HomeActivity.class);
-//                                            startActivity(goHome);
-//                                            Toast.makeText(Login.this, "Login Success!!", Toast.LENGTH_SHORT).show();
-//                                        } else if (checkStatus.equals("fail")){
-//                                            Log.i("statuse", checkStatus);
-//                                            Toast.makeText(Login.this, "Email address or Password incorrect!", Toast.LENGTH_SHORT).show();
-//                                        }
+
+                                
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -222,7 +218,7 @@ public class Login extends AppCompatActivity {
                         requestParams.add("password",String.valueOf(logPassword.getText().toString()));
                         Log.i("input",requestParams.toString());
                         AsyncHttpClient client = new AsyncHttpClient();
-                        client.post("http://192.168.1.22:2222/users/login", requestParams, new AsyncHttpResponseHandler() {
+                        client.post(port+"users/login", requestParams, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
 
@@ -255,20 +251,7 @@ public class Login extends AppCompatActivity {
                                             Toast.makeText(Login.this, "Email or Password is wrong!", Toast.LENGTH_SHORT).show();
                                         }
 
-//                                        if (checkStatus.equals("success")) {
-//                                            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-//                                            SharedPreferences.Editor editor = pref.edit();
-//                                            editor.putString("userId", id);
-//                                            editor.putString("userName", username);
-//                                            editor.commit();
-//
-//                                            Intent goHome = new Intent(Login.this, HomeActivity.class);
-//                                            startActivity(goHome);
-//                                            Toast.makeText(Login.this, "Login Success!!", Toast.LENGTH_SHORT).show();
-//                                        } else if (checkStatus.equals("fail")){
-//                                            Log.i("statuse", checkStatus);
-//                                            Toast.makeText(Login.this, "Email address or Password incorrect!", Toast.LENGTH_SHORT).show();
-//                                        }
+
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }

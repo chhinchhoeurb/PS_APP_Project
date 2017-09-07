@@ -45,6 +45,8 @@
         <activity android:name=".ClarifyAccountActivity"></activity>
         <activity android:name=".EditUserActivity"></activity>
 
+        
+
     </application>
 
 </manifest>

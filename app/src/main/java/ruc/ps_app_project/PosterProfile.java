@@ -1,5 +1,13 @@
 package ruc.ps_app_project;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,7 +38,11 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class PosterProfile extends AppCompatActivity {
-    Button btnPost, btn_view_pro, create_post;
+
+    String roleUser;
+    ListView simpleList;
+    Button updatePosterInfo;
+    Button btnPost, btn_cancel,btn_change_pro, btn_view_pro,create_post;
 
     TextView poster_name,back;
     ListView listViewPosterPost;
@@ -45,12 +58,31 @@ public class PosterProfile extends AppCompatActivity {
     List<String> DESCRIPTION = new ArrayList<>();
     List<String> DATETIME = new ArrayList<>();
     Context context;
+    String port = "http://192.168.1.17:1111/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poster_profile);
         context = PosterProfile.this;
+
+        updatePosterInfo = (Button)findViewById(R.id.update_info_poster);
+        updatePosterInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent updatePosterInfoIntent = new Intent(PosterProfile.this,EditPosterInfoActivity.class);
+                startActivity(updatePosterInfoIntent);
+            }
+        });
+
+//        SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+//        roleUser = preProfile.getString("user","");
+//
+//        if(!roleUser.equals("seller")){
+//            updatePosterInfo.setVisibility(View.INVISIBLE);
+//
+//        }
+
 
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +105,11 @@ public class PosterProfile extends AppCompatActivity {
         //============================data of poster==========================================
         final AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("apikey", "123");
-        client.get("http://192.168.1.27:8888/posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
+
+//         client.get("http://192.168.1.27:8888/posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
+
+        client.get(port+"posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
@@ -91,10 +127,16 @@ public class PosterProfile extends AppCompatActivity {
                         poster_name.setText(username);
 
                         // profile poster
-                        final String posterUrlImg = "http://192.168.1.27:8888/images/posters/"+profiles;
+//                         final String posterUrlImg = "http://192.168.1.27:8888/images/posters/"+profiles;
+//                         loadProfile(posterUrlImg,profile);
+                        // post image
+//                         final String productUrlImg = "http://192.168.1.27:8888/images/posters/"+covers;
+
+                        final String posterUrlImg = port+"images/posters/"+profiles;
                         loadProfile(posterUrlImg,profile);
                         // post image
-                        final String productUrlImg = "http://192.168.1.27:8888/images/posters/"+covers;
+                        final String productUrlImg = port+"images/posters/"+covers;
+
                         loadProductImage(productUrlImg,cover);
 
                     }catch (JSONException e){
@@ -112,7 +154,11 @@ public class PosterProfile extends AppCompatActivity {
 //==============================================for all favorite post=====================================
         final AsyncHttpClient clients = new AsyncHttpClient();
         clients.addHeader("apikey", "123");
-        clients.get("http://192.168.1.27:8888/posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
+
+//         clients.get("http://192.168.1.27:8888/posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
+
+        clients.get(port+"posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
+
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -120,7 +166,7 @@ public class PosterProfile extends AppCompatActivity {
                     String data = new String(responseBody, "UTF8");
                     //Log.i("data", data);
                     try {
-                        Toast.makeText(PosterProfile.this, "yes",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PosterProfile.this, "success",Toast.LENGTH_SHORT).show();
                         JSONObject jsonObj = new JSONObject(data);
                         JSONArray user_data = jsonObj.getJSONArray("posterpost");
                         //Loop all info
@@ -149,7 +195,7 @@ public class PosterProfile extends AppCompatActivity {
                             NUMLIKE.add(likes);
                         }
                     }catch (JSONException e){
-                        Toast.makeText(PosterProfile.this, "no",Toast.LENGTH_SHORT).show();
+
                         e.printStackTrace();
                     }
                 }catch (UnsupportedEncodingException e){
@@ -175,6 +221,13 @@ public class PosterProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+//        simpleList = (ListView) findViewById(R.id.listViewPoster);
+//        PosterAdapter customAdapter = new PosterAdapter(getApplicationContext(), countryList, flags);
+//        simpleList.setAdapter(customAdapter);
 
         //=================================for view profile =========================================
         profile = (ImageView)findViewById(R.id.imageView_profile);

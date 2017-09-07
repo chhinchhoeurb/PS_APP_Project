@@ -41,12 +41,23 @@ public class Register extends AppCompatActivity {
     String user = "";
     TextView back;
     TextInputLayout TextInputConfirmPass, TextInputPassword, TextInputUsername, TextInputEmail;
+    String port = "http://192.168.1.17:1111/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
+        Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
+        if (RadioButtonState == true){
+            //==================Sharepreference user role=============================
+            SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userPref.edit();
+            editor.putString("user","seller");
+            editor.commit();
+            user = "seller";
 
+        }
 
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -81,10 +92,9 @@ public class Register extends AppCompatActivity {
                 }
             }
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) {}
         });
+
         // Email required
         email.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,13 +111,7 @@ public class Register extends AppCompatActivity {
                 }
             }
             @Override
-            public void afterTextChanged(Editable editable) {
-//                if(!emailValidator(email.getText().toString())){
-//                    showMsgError(TextInputEmail, email,"Email is invalid!");
-//                }else {
-//                    hideMsgError(TextInputEmail, email,2);
-//                }
-            }
+            public void afterTextChanged(Editable editable) {}
         });
 
         // password required
@@ -177,6 +181,7 @@ public class Register extends AppCompatActivity {
                 Boolean checkData = false;
                 if(name.length()== 0){
                     showMsgError(TextInputUsername, username, "User name is required!");
+                    checkData = true;
                 }else{
                     hideMsgError(TextInputUsername, username,2);
                 }
@@ -239,7 +244,11 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.27:8888/posters/register", requestParams, new AsyncHttpResponseHandler() {
+
+//                         client.post("http://192.168.1.27:8888/posters/register", requestParams, new AsyncHttpResponseHandler() {
+
+                        client.post(port+"posters/register", requestParams, new AsyncHttpResponseHandler() {
+
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
@@ -298,7 +307,11 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-                        client.post("http://192.168.1.27:8888/users/register", requestParams, new AsyncHttpResponseHandler() {
+
+//                         client.post("http://192.168.1.27:8888/users/register", requestParams, new AsyncHttpResponseHandler() {
+
+                        client.post(port+"users/register", requestParams, new AsyncHttpResponseHandler() {
+
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
@@ -439,9 +452,9 @@ public class Register extends AppCompatActivity {
         return matcher.matches();
 
     }
+
     public void onBackPressed()
     {
-        // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
     }
 }

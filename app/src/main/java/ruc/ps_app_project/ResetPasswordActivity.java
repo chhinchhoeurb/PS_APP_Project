@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -35,8 +36,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
     Intent intent;
     String email,newPass,conPass, url;
     Button resetPassword;
+    TextView goToForgotPass;
     TextInputLayout TextInputVerifyCode, TextInputNewPassword, extInputConfirmPass;
-
+    String port = "http://192.168.1.17:1111/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,10 +169,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         String getUrl = "";
                         Log.i("url",url);
                         Log.i("email",email);
-                        if (url.equals("http://192.168.1.22:2222/posters/sendMail")){
-                            getUrl = "http://192.168.1.22:2222/posters/resetForgotPass";
+                        if (url.equals(port+"posters/sendMail")){
+                            getUrl = port+"posters/resetForgotPass";
                         }else{
-                            getUrl = "http://192.168.1.22:2222/users/resetForgotPass" ;
+                            getUrl = port+"users/resetForgotPass" ;
                         }
                         RequestParams requestParams = new RequestParams();
                         requestParams.add("email",String.valueOf(email));
@@ -217,6 +219,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        goToForgotPass = (TextView) findViewById(R.id.btnPostBack);
+        goToForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ResetPasswordActivity.this,ForgotPassActivity.class);
+                startActivity(intent);
             }
         });
     }

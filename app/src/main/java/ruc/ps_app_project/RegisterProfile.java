@@ -1,7 +1,9 @@
 package ruc.ps_app_project;
 
 import android.content.Context;
+
 import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,7 +33,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class RegisterProfile extends AppCompatActivity {
-
+    Button updateUserInfo;
     GridView gridViewFavorite;
     Button btnPost, btn_cancel,btn_change_pro, btn_view_pro;
     TextView register_name,back;
@@ -42,7 +44,7 @@ public class RegisterProfile extends AppCompatActivity {
     List<String> POSTER_ID = new ArrayList<>();
     List<String> FAVORITEIMAGE = new ArrayList<>();
     List<String> POSTTITLE = new ArrayList<>();
-
+    String port = "http://192.168.1.17:1111/";
 
     Context context;
 
@@ -51,6 +53,14 @@ public class RegisterProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_profile);
         context = RegisterProfile.this;
+        updateUserInfo = (Button)findViewById(R.id.activity_edit_user);
+        updateUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent updateUserIntent = new Intent(RegisterProfile.this,EditUserActivity.class);
+                startActivity(updateUserIntent);
+            }
+        });
 
 //==========================for profile==============================================
         register_name = (TextView)findViewById(R.id.textView_username);
@@ -66,7 +76,7 @@ public class RegisterProfile extends AppCompatActivity {
         //============================data of poster==========================================
         final AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("apikey", "123");
-        client.get("http://192.168.1.6:8888/users/userProfile/"+userId, new AsyncHttpResponseHandler(){
+        client.get(port+"users/userProfile/"+userId, new AsyncHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
@@ -84,10 +94,10 @@ public class RegisterProfile extends AppCompatActivity {
                         register_name.setText(register_names);
 
                         // profile poster
-                        final String posterUrlImg = "http://192.168.1.6:8888/images/users/"+profiles;
+                        final String posterUrlImg = port+"users/userProfile/images/users/"+profiles;
                         loadProfile(posterUrlImg,profile);
                         // post image
-                        final String productUrlImg = "http://192.168.1.6:8888/images/users/"+covers;
+                        final String productUrlImg = port+"users/userProfile/images/users/"+covers;
                         loadProductImage(productUrlImg,cover);
 
                     }catch (JSONException e){
@@ -107,7 +117,7 @@ public class RegisterProfile extends AppCompatActivity {
 
         //==============================================for all favorite post=====================================
 
-        client.get("http://192.168.1.6:8888/users/viewUserFavorite/"+userId, new AsyncHttpResponseHandler() {
+        client.get(port+"users/viewUserFavorite/"+userId, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -225,7 +235,6 @@ public class RegisterProfile extends AppCompatActivity {
     }
 
 
-
     //============================ To load image of profile==============================================
     private void loadProfile(String url,ImageView imgView){
         Picasso.with(context)
@@ -245,7 +254,6 @@ public class RegisterProfile extends AppCompatActivity {
                 //.centerCrop()
                 .into(imgView);
     }
-
 
 
 }

@@ -1,10 +1,10 @@
 package ruc.ps_app_project;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,27 +41,92 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ListView simpleList;
     private Spinner spinner;
-    List<String> users;
-    List<String> postId, postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav;
-    ListView homeListView;
-    String roleUser;
+    static List<String> postCategoryName,users,postId,postDesc,postPro,postImage,dateAndTime,numeLike,numCmt,numFav,postCategoryId;
+    ListView homeListView,categoriesListView;
+
     TextView registerAction,loginAction, back;
+
     View nav_view ;
+    String cat_name;
+
+    //---------------------------- Start Tag bar --------------------------
+    private ListView mTextMessage;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+//                    mTextMessage.setText(R.string.title_home);
+                    Toast.makeText(HomeActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                    // call AsynTask to perform network operation on separate thread
+                    new HttpAsyncTask().execute("http://192.168.1.22:2222/posts/viewAllPost");
+//                    new HttpAsyncTaskCategories().execute("http://192.168.1.22:2222/posts/categories");
+                    return true;
+                case R.id.navigation_categories:
+//                    mTextMessage.setText(R.string.title_dashboard);
+//                    new HttpAsyncTask().execute("http://192.168.1.10:1111/posts/viewAllPost");
+                    new HttpAsyncTaskCategories().execute("http://192.168.1.22:2222/posts/categories");
+                    Toast.makeText(HomeActivity.this,"navigation dashboard",Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_notifications:
+//                    mTextMessage.setText(R.string.title_notifications);
+                    Toast.makeText(HomeActivity.this,"navigation notifications",Toast.LENGTH_SHORT).show();
+                    return true;
+
+            }
+            return false;
+        }
+
+    };
+    //---------------------------- End Tag bar --------------------------
+
+    String port = "http://192.168.1.17:1111/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //---------------------------- Start Tag bar --------------------------
+        mTextMessage = (ListView) findViewById(R.id.simpleListView);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //---------------------------- End Tag bar --------------------------
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SharedPreferences preProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
-        roleUser = preProfile.getString("user","");
         // -------------------------List view--------------------------
         homeListView = (ListView)findViewById(R.id.simpleListView);
         //Event on ListView
+        homeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
+//                Intent detailIntent = new Intent(HomeActivity.this,PostDetailActivity.class);
+//                detailIntent.putExtra("postId",postId.get(position).toString());
+////                detailIntent.putExtra("userPostId",USERPOSTID.get(position).toString());
+//                startActivity(detailIntent);
+            }
+        });
 
+        // -------------------------List view--------------------------
+        categoriesListView = (ListView)findViewById(R.id.simpleListView);
+        //Event on ListView
+
+        categoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Toast.makeText(getBaseContext(), "not data!", Toast.LENGTH_SHORT).show();
+//                Intent detailIntent = new Intent(HomeActivity.this,PostDetailActivity.class);
+//                detailIntent.putExtra("postId",postId.get(position).toString());
+                // detailIntent.putExtra("userPostId",USERPOSTID.get(position).toString());
+//                startActivity(detailIntent);
+            }
+        });
 
         //-----------drawer bar----------------------
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -71,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //---------------------------Register---------------------------------
@@ -96,33 +160,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-        //------------------------------------start Spinner-------------------------------------
-
-
-        // Spinner Drop down elements
-        final List<String> categories = new ArrayList<String>();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
-
-        Spinner spinner = (Spinner) navigationView.getMenu().findItem(R.id.nav_categories).getActionView();
-        spinner.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,categories));
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(HomeActivity.this, categories.get(position),Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-
-        //----------------------------------End spinner----------------------------------------
-
         users = new ArrayList<String>();
         postDesc = new ArrayList<String>();
         postPro = new ArrayList<String>();
@@ -132,12 +169,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         numCmt = new ArrayList<String>();
         numFav = new ArrayList<String>();
         postId = new ArrayList<String>();
-
+        postCategoryId = new ArrayList<String>();
+        postCategoryName = new ArrayList<String>();
+        //------------------------Start get data all of post----------------------
 
         // call AsynTask to perform network operation on separate thread
         new HttpAsyncTask().execute("http://192.168.1.27:8888/posts/viewAllPost");
 
+        //------------------------End get data all of post----------------------
 
+
+        // call AsynTask to perform network operation on separate thread
+//         new HttpAsyncTask().execute("http://192.168.1.22:2222/posts/viewAllPost");
+//        new HttpAsyncTaskCategories().execute("http://192.168.1.22:2222/posts/categories");
+        new HttpAsyncTask().execute(port+"posts/viewAllPost");
     }
 
 
@@ -195,7 +240,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             try {
                 JSONObject jsonObj = new JSONObject(result);
                 JSONArray jArray = jsonObj.getJSONArray("data");
-
+                HomeActivity.users.clear();
+                HomeActivity.postDesc.clear();
+                HomeActivity.postPro.clear();
+                HomeActivity.postImage.clear();
+                HomeActivity.dateAndTime.clear();
+                HomeActivity.numeLike.clear();
+                HomeActivity.numCmt.clear();
+                HomeActivity.numFav.clear();
+                HomeActivity.postId.clear();
                 for(int i=0; i < jArray.length(); i++){
                     JSONObject jsonObject = jArray.getJSONObject(i);
                     String name = jsonObject.getString("username");
@@ -218,9 +271,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     numFav.add(favs);
                     postId.add(postIds);
                     Log.i("name",postId.toString());
-
-
-
                 }
 
             } catch (JSONException e) {
@@ -229,8 +279,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),
-                    roleUser,postId,users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
+            HomeAdapter homeList = new HomeAdapter(getApplicationContext(),users,dateAndTime,postDesc,postPro,postImage,numeLike,numFav,numCmt);
             homeListView.setAdapter(homeList);
 
         }
@@ -261,41 +310,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_manage_favorite) {
 
         } else if (id == R.id.nav_manage_profile) {
-            SharedPreferences preferProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
-            String userRole = preferProfile.getString("user","");
-            if(userRole.equals("seller")){
-                Toast.makeText(HomeActivity.this, userRole, Toast.LENGTH_LONG).show();
-                Intent intent= new Intent(HomeActivity.this, PosterProfile.class);
-                startActivity(intent);
-            }else if(userRole.equals("buyer")){
-                Toast.makeText(HomeActivity.this, userRole, Toast.LENGTH_LONG).show();
-                Intent intent= new Intent(HomeActivity.this, RegisterProfile.class);
-                startActivity(intent);
-            }else {
-
-                    Intent intent= new Intent(HomeActivity.this, Login.class);
-                    startActivity(intent);
-            }
 
         } else if (id == R.id.nav_manage_post) {
 
         } else if (id == R.id.nav_change_password) {
-           // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
+            // Intent intent = new Intent(HomeActivity.this,ChangePasswordActivity.class);
             //startActivity(intent);
         } else if (id == R.id.nav_Logout){
-            SharedPreferences preferProfile = getSharedPreferences("userRole", Context.MODE_PRIVATE);
-            SharedPreferences.Editor edit = preferProfile.edit();
-            edit.clear();
-            edit.commit();
-            /// Clear share Preference
-            SharedPreferences pref = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-            editor.commit();
-            Log.i("Clear", editor.toString());
-            Toast.makeText(HomeActivity.this,"Logout Successful.",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(HomeActivity.this, Login.class);
-            startActivity(intent);
+            // Lgoin preference
 
         }
 
@@ -303,5 +325,42 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    class HttpAsyncTaskCategories extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... urls) {
+            return GET(urls[0]);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONArray jArray = jsonObj.getJSONArray("categories");
+                int i;
+
+                HomeActivity.postCategoryName.clear();
+                for(i=0; i < jArray.length(); i++){
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+//                    String idCate = jsonObject.getString("id");
+                    String nameCate = jsonObject.getString("cat_name");
+                    postCategoryName.add(nameCate);
+//                    postCategoryId.add(idCate);
+                    Log.i("name",postCategoryName.toString());
+                }
+                Log.i("nameResult",postCategoryName.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getBaseContext(), "not data!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            CategoriesAdapter categories = new CategoriesAdapter(getApplicationContext(),postCategoryName,postCategoryId);
+            categoriesListView.setAdapter(categories);
+
+        }
+    }
+
+
 
 }

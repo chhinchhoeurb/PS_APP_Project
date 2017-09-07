@@ -15,7 +15,7 @@ import java.util.List;
 
 public class RegisterAdapter extends ArrayAdapter {
     List<String> POSTTITLE,FAVORITEIMAGE;
-
+    String port = "http://192.168.1.17:1111/";
     Context context;
 
     public RegisterAdapter(@NonNull Context applicationContext, List<String> pos_title, List<String> fav_pos) {
@@ -64,7 +64,7 @@ public class RegisterAdapter extends ArrayAdapter {
         }
 
         // post image
-        final String postImageurl = "http://192.168.1.6:8888/images/posts/"+FAVORITEIMAGE.get(i);
+        final String postImageurl = port+"images/posts/"+FAVORITEIMAGE.get(i);
         loadImagePost(postImageurl,holder.fav_image);
         holder.pos_title.setText(POSTTITLE.get(i));
 

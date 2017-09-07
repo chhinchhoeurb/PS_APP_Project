@@ -53,7 +53,9 @@
     <!--=========================End menu==================================-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
 
 
@@ -110,8 +112,10 @@
 
                     </LinearLayout>
 
+
                 </LinearLayout>
                 <!--End header-->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,7 +129,8 @@
                         android:layout_width="wrap_content"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/boss_baby"/>
 
                     <TextView
                         android:id="@+id/pDes"
@@ -135,7 +140,7 @@
                         android:layout_marginRight="20dp"
                         android:textAlignment="textStart"
                         android:layout_marginTop="10dp"
-                        android:text=""
+                        android:text="We're headquartered in Hong Kong and we benefit from our development platform in South-East Asia to deliver cost-effective projects."
                         android:textColor="#000"
                         android:textSize="14dp" />
 
@@ -289,162 +294,116 @@
                 </TableLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:background="@drawable/border">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:background="@drawable/border">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_title"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textSize="16dp"
-                        android:text="Contact Us"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@color/color_title"-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:text="Contact Us"/>-->
 
-                    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="1"> <!-- stretch the second column of the layout-->
+                    <!--<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:stretchColumns="1"> &lt;!&ndash; stretch the second column of the layout&ndash;&gt;-->
 
-                        <TableRow
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp">
+                        <!--<TableRow-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="12dp">-->
 
-                            <TextView
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:padding="10dip"
-                                android:text="Phone:"
-                                android:textColor="#000"
-                                android:textSize="12dp" />
+                            <!--<TextView-->
+                                <!--android:layout_width="100dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:textStyle="bold"-->
+                                <!--android:padding="10dip"-->
+                                <!--android:text="Phone:"-->
+                                <!--android:textColor="#000"-->
+                                <!--android:textSize="12dp" />-->
 
-                            <TextView
-                                android:id="@+id/cPhone"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:padding="10dip"
-                                android:layout_marginRight="20dp"
-                                android:text=""
-                                android:textColor="#000"
-                                android:textSize="14dp" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/cPhone"-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="10dip"-->
+                                <!--android:layout_marginRight="20dp"-->
+                                <!--android:text=""-->
+                                <!--android:textColor="#000"-->
+                                <!--android:textSize="14dp" />-->
 
-                        </TableRow>
-                        <TableRow
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp">
+                        <!--</TableRow>-->
+                        <!--<TableRow-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="12dp">-->
 
-                            <TextView
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:padding="10dip"
-                                android:text="Email:"
-                                android:textColor="#000"
-                                android:textSize="12dp" />
+                            <!--<TextView-->
+                                <!--android:layout_width="100dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:textStyle="bold"-->
+                                <!--android:padding="10dip"-->
+                                <!--android:text="Email:"-->
+                                <!--android:textColor="#000"-->
+                                <!--android:textSize="12dp" />-->
 
-                            <TextView
-                                android:id="@+id/cMail"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:padding="10dip"
-                                android:layout_marginRight="20dp"
-                                android:text=""
-                                android:textColor="#000"
-                                android:textSize="14dp" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/cMail"-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="10dip"-->
+                                <!--android:layout_marginRight="20dp"-->
+                                <!--android:text=""-->
+                                <!--android:textColor="#000"-->
+                                <!--android:textSize="14dp" />-->
 
-                        </TableRow>
-                        <TableRow
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp">
+                        <!--</TableRow>-->
+                        <!--<TableRow-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="12dp">-->
 
-                            <TextView
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:padding="10dip"
-                                android:text="Address:"
-                                android:textColor="#000"
-                                android:textSize="12dp" />
+                            <!--<TextView-->
+                                <!--android:layout_width="100dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:textStyle="bold"-->
+                                <!--android:padding="10dip"-->
+                                <!--android:text="Address:"-->
+                                <!--android:textColor="#000"-->
+                                <!--android:textSize="12dp" />-->
 
-                            <TextView
-                                android:id="@+id/cAddress"
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:padding="10dip"
-                                android:layout_marginRight="20dp"
-                                android:text=""
-                                android:textColor="#000"
-                                android:textSize="14dp" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/cAddress"-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="10dip"-->
+                                <!--android:layout_marginRight="20dp"-->
+                                <!--android:text=""-->
+                                <!--android:textColor="#000"-->
+                                <!--android:textSize="14dp" />-->
 
-                        </TableRow>
-                    </TableLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ListView
-                        android:id="@+id/listCmt"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:divider="@color/color_like_cmt_fav"
-                        android:dividerHeight="1dp"
-                        android:footerDividersEnabled="true" />
+                        <!--</TableRow>-->
+                    <!--</TableLayout>-->
 
                 </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/btnComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="10dp">
+        <!--</LinearLayout>-->
 
-                    <EditText
-                        android:id="@+id/cmtMessage"
-                        android:inputType="textEmailAddress"
-                        android:textColor="@color/black"
-                        android:background="@drawable/commentformat"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:hint="Username"
-                        android:layout_gravity="center"
-                        android:layout_width="280dp"
-                        android:layout_height="45dp"
-                        android:textColorHint="#fff"/>
-
-                    <TextView
-                        android:id="@+id/sendCmt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="26dp"
-                        android:drawableStart="@drawable/ic_send_black_24dp"
-                        />
-
-                </LinearLayout>
-                
-            </LinearLayout>
 
 
 
         </LinearLayout>
 
-
     </ScrollView>
 
-</LinearLayout>
 
+
+
+
+</LinearLayout>

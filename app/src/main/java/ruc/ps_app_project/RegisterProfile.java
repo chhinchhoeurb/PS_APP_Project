@@ -1,9 +1,13 @@
 package ruc.ps_app_project;
 
 import android.content.Context;
+
+import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -57,22 +61,6 @@ public class RegisterProfile extends AppCompatActivity {
                 startActivity(updateUserIntent);
             }
         });
-
-        // Create an object of CustomAdapter and set Adapter to GirdView
-//        RegisterAdapter customAdapter = new RegisterAdapter(getApplicationContext(), USERNAME,DATETIME ,DESCRIPTION,PROFILE, FAVORITEIMAGE ,NUMLIKE,NUMFAV,NUMCMT));
-//        simpleGrid.setAdapter(customAdapter);
-
-//        simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // set an Intent to Another Activity
-//                //Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-//                //  intent.putExtra("IMAGE", logos[position]); // put image data in Intent
-//                // startActivity(intent); // start Intent
-//                Toast.makeText(RegisterProfile.this,"Popup Image",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
 //==========================for profile==============================================
         register_name = (TextView)findViewById(R.id.textView_username);
@@ -173,6 +161,74 @@ public class RegisterProfile extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
+            }
+        });
+
+        //=================================for view profile =========================================
+        profile = (ImageView)findViewById(R.id.imageView_profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage("Do you want to");
+                builder1.setCancelable(true);
+
+
+                builder1.setNegativeButton(
+                        "Change Profile",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+//                                Intent intent = new Intent(PosterProfile.this, ChangeProfile.class);
+//                                startActivity(intent);
+                            }
+                        });
+                builder1.setPositiveButton(
+                        "View Profile",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(RegisterProfile.this, ImageProRegisterActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+        });
+
+        //=================================for view profile =========================================
+        cover = (ImageView)findViewById(R.id.imageView_cover);
+        cover.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setMessage("Do you want to");
+                builder1.setCancelable(true);
+
+
+                builder1.setNegativeButton(
+                        "Change Cover",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+//                                Intent intent = new Intent(PosterProfile.this, ChangeProfile.class);
+//                                startActivity(intent);
+                            }
+                        });
+                builder1.setPositiveButton(
+                        "View Cover",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(RegisterProfile.this, ImageCoverRegisterActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 

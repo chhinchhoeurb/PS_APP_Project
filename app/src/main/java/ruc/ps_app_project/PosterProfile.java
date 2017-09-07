@@ -8,12 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.View;
@@ -42,8 +40,7 @@ public class PosterProfile extends AppCompatActivity {
     String roleUser;
     ListView simpleList;
     Button updatePosterInfo;
-    Button btnPost, btn_cancel,btn_change_pro, btn_view_pro,create_post;
-
+    Button btnPost, btn_cancel,btn_change_pro, btn_view_pro;
     TextView poster_name,back;
     ListView listViewPosterPost;
     ImageView cover, profile;
@@ -105,11 +102,7 @@ public class PosterProfile extends AppCompatActivity {
         //============================data of poster==========================================
         final AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("apikey", "123");
-
-//         client.get("http://192.168.1.27:8888/posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
-
         client.get(port+"posters/posterProfile/"+userId, new AsyncHttpResponseHandler(){
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
@@ -127,16 +120,10 @@ public class PosterProfile extends AppCompatActivity {
                         poster_name.setText(username);
 
                         // profile poster
-//                         final String posterUrlImg = "http://192.168.1.27:8888/images/posters/"+profiles;
-//                         loadProfile(posterUrlImg,profile);
-                        // post image
-//                         final String productUrlImg = "http://192.168.1.27:8888/images/posters/"+covers;
-
                         final String posterUrlImg = port+"images/posters/"+profiles;
                         loadProfile(posterUrlImg,profile);
                         // post image
                         final String productUrlImg = port+"images/posters/"+covers;
-
                         loadProductImage(productUrlImg,cover);
 
                     }catch (JSONException e){
@@ -154,11 +141,7 @@ public class PosterProfile extends AppCompatActivity {
 //==============================================for all favorite post=====================================
         final AsyncHttpClient clients = new AsyncHttpClient();
         clients.addHeader("apikey", "123");
-
-//         clients.get("http://192.168.1.27:8888/posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
-
         clients.get(port+"posters/viewPosterPost/"+userId, new AsyncHttpResponseHandler() {
-
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -211,16 +194,6 @@ public class PosterProfile extends AppCompatActivity {
 
             }
         });
-        //================================ For create post ===========================================
-
-        create_post = (Button)findViewById(R.id.create_post);
-        create_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PosterProfile.this, CreatePost.class);
-                startActivity(intent);
-            }
-        });
 
 
 
@@ -233,71 +206,34 @@ public class PosterProfile extends AppCompatActivity {
         profile = (ImageView)findViewById(R.id.imageView_profile);
         profile.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-                builder1.setMessage("Do you want to");
-                builder1.setCancelable(true);
+                openDialog();
 
-
-                builder1.setNegativeButton(
-                        "Change Profile",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-//                                Intent intent = new Intent(PosterProfile.this, ChangeProfile.class);
-//                                startActivity(intent);
-                            }
-                        });
-                builder1.setPositiveButton(
-                        "View Profile",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(PosterProfile.this, ImageProfileActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
-        //=================================for view profile =========================================
-        cover = (ImageView)findViewById(R.id.imageView_cover);
-        cover.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-                builder1.setMessage("Do you want to");
-                builder1.setCancelable(true);
-
-
-                builder1.setNegativeButton(
-                        "Change Cover",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-//                                Intent intent = new Intent(PosterProfile.this, ChangeProfile.class);
-//                                startActivity(intent);
-                            }
-                        });
-                builder1.setPositiveButton(
-                        "View Cover",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(PosterProfile.this, ImageCoverPosterActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
             }
         });
 
 
     }
+
+
+    public void openDialog() {
+        final Dialog dialog = new Dialog(context); // Context, this, etc.
+        dialog.setContentView(R.layout.activity_dialog);
+        dialog.show();
+//        btn_cancel = (Button)findViewById(R.id.btn_cancel);
+//        btn_cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.dismiss();
+//            }
+//        });
+    }
+
+
+
+
+
 
 
     //============================ To load image of profile==============================================
@@ -319,6 +255,5 @@ public class PosterProfile extends AppCompatActivity {
                 //.centerCrop()
                 .into(imgView);
     }
-
 
 }

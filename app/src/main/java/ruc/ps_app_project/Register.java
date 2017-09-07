@@ -46,7 +46,6 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
         Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
         if (RadioButtonState == true){
@@ -58,7 +57,6 @@ public class Register extends AppCompatActivity {
             user = "seller";
 
         }
-
         back = (TextView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,18 +215,7 @@ public class Register extends AppCompatActivity {
                 }
 
                 if(checkData.equals(false)){
-                    RadioButton simpleRadioButton = (RadioButton) findViewById(R.id.radio_seller); // initiate a radio button
-                    Boolean RadioButtonState = simpleRadioButton.isChecked(); // check current state of a radio button (true or false).
-                    if (RadioButtonState == true){
-                        //==================Sharepreference user role=============================
-                        SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = userPref.edit();
-                        editor.putString("user","seller");
-                        editor.commit();
-                        user = "seller";
-                    }
                     if (user.equals("seller")) {
-                        Toast.makeText(Register.this, "seller", Toast.LENGTH_LONG).show();
                         //==================Sharepreference user role=============================
                         SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = userPref.edit();
@@ -244,11 +231,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-
-//                         client.post("http://192.168.1.27:8888/posters/register", requestParams, new AsyncHttpResponseHandler() {
-
                         client.post(port+"posters/register", requestParams, new AsyncHttpResponseHandler() {
-
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
@@ -270,17 +253,14 @@ public class Register extends AppCompatActivity {
                                             Intent intent = new Intent(Register.this, HomeActivity.class);
                                             startActivity(intent);
                                         } else if (status.equals("fail")){
-                                            Toast.makeText(Register.this, "register 1", Toast.LENGTH_LONG).show();
                                             showMsgError(TextInputEmail, email,"Email is already used!");
                                         }
                                         System.out.println(obj);
                                     } catch (Throwable t) {
-                                        Toast.makeText(Register.this, "register 2", Toast.LENGTH_LONG).show();
 
                                         t.printStackTrace();
                                     }
                                 } catch (UnsupportedEncodingException e) {
-                                    Toast.makeText(Register.this, "register 3", Toast.LENGTH_LONG).show();
 
                                     e.printStackTrace();
                                 }
@@ -291,12 +271,12 @@ public class Register extends AppCompatActivity {
                             }
                         });
                     } else if (user.equals("buyer")) {
-                        Toast.makeText(Register.this, "buyer", Toast.LENGTH_LONG).show();
                         //==================Sharepreference user role=============================
                         SharedPreferences userPref = getSharedPreferences("userRole", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = userPref.edit();
                         editor.putString("user","buyer");
                         editor.commit();
+
 
                         // get text form input
                         AsyncHttpClient client = new AsyncHttpClient();
@@ -307,11 +287,7 @@ public class Register extends AppCompatActivity {
                         requestParams.add("username", String.valueOf(username.getText()));
                         requestParams.add("confirmPass", String.valueOf(confirmPass.getText()));
                         //For add student
-
-//                         client.post("http://192.168.1.27:8888/users/register", requestParams, new AsyncHttpResponseHandler() {
-
                         client.post(port+"users/register", requestParams, new AsyncHttpResponseHandler() {
-
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {

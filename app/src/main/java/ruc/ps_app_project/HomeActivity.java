@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         // call AsynTask to perform network operation on separate thread
-        new HttpAsyncTask().execute("http://192.168.1.14:1111/posts/viewAllPost");
+        new HttpAsyncTask().execute("http://192.168.1.27:8888/posts/viewAllPost");
 
 
     }

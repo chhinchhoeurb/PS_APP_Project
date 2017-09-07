@@ -10,8 +10,12 @@
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/categories"
-            android:title=""
-            app:actionLayout="@layout/spinner_layout"/>
+            android:title="Categories"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_categories"-->
+            <!--android:icon="@drawable/categories"-->
+            <!--android:title=""-->
+            <!--app:actionLayout="@layout/spinner_layout"/>-->
         <item
             android:id="@+id/nav_manage_favorite"
             android:icon="@drawable/favorite"
@@ -24,13 +28,21 @@
             android:id="@+id/nav_manage_post"
             android:icon="@drawable/post"
             android:title="Manage Post" />
-        <item
-            android:id="@+id/nav_change_password"
-            android:icon="@drawable/ic_vpn_key_black_24dp"
-            android:title="Change Password" />
-        <item
-            android:id="@+id/nav_Logout"
-            android:icon="@drawable/logout"
-            android:title="Logout" />
+        <item android:visible="true"
+            android:enabled="true"
+            android:title="Setting">
+            <menu>
+                <item
+                    android:id="@+id/nav_change_password"
+                    android:icon="@drawable/ic_vpn_key_black_24dp"
+                    android:title="Change Password" />
+                <item
+                    android:id="@+id/nav_Logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+            </menu>
+        </item>
+
     </group>
+
 </menu>

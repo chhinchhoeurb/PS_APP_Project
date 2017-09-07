@@ -1,19 +1,16 @@
 package ruc.ps_app_project;
 
 import android.app.Dialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -32,7 +28,6 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.HttpGet;
-import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -51,6 +46,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+
 
 public class PostDetailActivity extends AppCompatActivity {
     String userLoginID,roleUser,cmtSms;
@@ -136,7 +132,13 @@ public class PostDetailActivity extends AppCompatActivity {
         //------------------------Start get data detail of post
         AsyncHttpClient client = new AsyncHttpClient();
 
+
+
+//         client.get("http://192.168.1.10:1111/posts/postDetail/"+productPostID, new AsyncHttpResponseHandler() {
+
         client.get(port+"posts/postDetail/"+productPostID, new AsyncHttpResponseHandler() {
+
+
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -169,7 +171,6 @@ public class PostDetailActivity extends AppCompatActivity {
                         // post image
                         final String productUrlImg = port+"images/posts/"+objJson.getString("pos_image");
                         loadProductImage(productUrlImg,postImage);
-
 
                     } catch (Throwable t) {
                         t.printStackTrace();
@@ -277,69 +278,69 @@ public class PostDetailActivity extends AppCompatActivity {
 
 
     // ---------------- start Overflow menu ---------------------
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-       if(userPostID.equals(userLoginID)){
-          MenuInflater mMenuInflater = getMenuInflater();
-            mMenuInflater.inflate(R.menu.menu_detail, menu);
-           return true;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//       if(userPostID.equals(userLoginID)){
+//          MenuInflater mMenuInflater = getMenuInflater();
+//            mMenuInflater.inflate(R.menu.menu_detail, menu);
+//           return true;
+//        }
+//        return true;
+//    }
 
 
-    /**
-     * Menu overflow
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.update_post:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-
-                Intent updateIntent = new Intent(PostDetailActivity.this,UpdatePost.class);
-                startActivity(updateIntent);
-                return true;
-            case R.id.delete_post:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-
-                final Dialog dialog = new Dialog(contextDialog);
-                dialog.setContentView(R.layout.custom_dialog);
-
-                // btn delete student
-                Button deleteStu = (Button) dialog.findViewById(R.id.btnDelete);
-                // if button is clicked, it will delete this post
-                deleteStu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Action
-                    }
-                });
-
-                // btn dismiss button
-                Button cancel = (Button) dialog.findViewById(R.id.btnCancel);
-                // if button is clicked, close the custom dialog
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
+//    /**
+//     * Menu overflow
+//     * @param item
+//     * @return
+//     */
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        switch (item.getItemId()) {
+//            case R.id.update_post:
+//                if (item.isChecked()) item.setChecked(false);
+//                else item.setChecked(true);
+//
+//                Intent updateIntent = new Intent(PostDetailActivity.this,UpdatePost.class);
+//                startActivity(updateIntent);
+//                return true;
+//            case R.id.delete_post:
+//                if (item.isChecked()) item.setChecked(false);
+//                else item.setChecked(true);
+//
+//                final Dialog dialog = new Dialog(contextDialog);
+//                dialog.setContentView(R.layout.custom_dialog);
+//
+//                // btn delete student
+//                Button deleteStu = (Button) dialog.findViewById(R.id.btnDelete);
+//                // if button is clicked, it will delete this post
+//                deleteStu.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //Action
+//                    }
+//                });
+//
+//                // btn dismiss button
+//                Button cancel = (Button) dialog.findViewById(R.id.btnCancel);
+//                // if button is clicked, close the custom dialog
+//                cancel.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                dialog.show();
+//
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//
+//    }
 
     // ---------------- End Overflow menu ---------------------
 
